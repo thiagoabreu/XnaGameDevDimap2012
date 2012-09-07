@@ -1,0 +1,13 @@
+c:\users\thiago 'jedi' abreu\documents\visual studio 2010\Projects\LinuxGame\LinuxGame\bin\Debug\LinuxGame.exe
+c:\users\thiago 'jedi' abreu\documents\visual studio 2010\Projects\LinuxGame\LinuxGame\bin\Debug\LinuxGame.pdb
+c:\users\thiago 'jedi' abreu\documents\visual studio 2010\Projects\LinuxGame\LinuxGame\bin\Debug\Lidgren.Network.dll
+c:\users\thiago 'jedi' abreu\documents\visual studio 2010\Projects\LinuxGame\LinuxGame\bin\Debug\MonoGame.Framework.Linux.dll
+c:\users\thiago 'jedi' abreu\documents\visual studio 2010\Projects\LinuxGame\LinuxGame\bin\Debug\OpenTK.dll
+c:\users\thiago 'jedi' abreu\documents\visual studio 2010\Projects\LinuxGame\LinuxGame\bin\Debug\Tao.Sdl.dll
+c:\users\thiago 'jedi' abreu\documents\visual studio 2010\Projects\LinuxGame\LinuxGame\bin\Debug\Lidgren.Network.xml
+c:\users\thiago 'jedi' abreu\documents\visual studio 2010\Projects\LinuxGame\LinuxGame\obj\x86\Debug\LinuxGame.csprojResolveAssemblyReference.cache
+c:\users\thiago 'jedi' abreu\documents\visual studio 2010\Projects\LinuxGame\LinuxGame\obj\x86\Debug\LinuxGame.exe
+c:\users\thiago 'jedi' abreu\documents\visual studio 2010\Projects\LinuxGame\LinuxGame\obj\x86\Debug\LinuxGame.pdb
+c:\users\thiago 'jedi' abreu\documents\visual studio 2010\Projects\LinuxGame\LinuxGame\bin\Debug\Content\Font.xnb
+c:\users\thiago 'jedi' abreu\documents\visual studio 2010\Projects\LinuxGame\LinuxGame\bin\Debug\Content\Tank.xnb
+c:\users\thiago 'jedi' abreu\documents\visual studio 2010\Projects\LinuxGame\LinuxGame\bin\Debug\Content\Turret.xnb

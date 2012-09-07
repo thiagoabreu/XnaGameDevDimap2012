@@ -1,0 +1,28 @@
+﻿<Properties GitUserInfo="UsingGIT">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|Mixed Platforms" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Peer-to-PeerTank/PeerToPeerGame.cs">
+    <Files>
+      <File FileName="../../MonoAsp/Default.aspx" Line="12" Column="8" />
+      <File FileName="../../MonoAsp/Default.aspx.cs" Line="11" Column="1" />
+      <File FileName="ShooterLinux/Game1.cs" Line="29" Column="3" />
+      <File FileName="ShooterLinux/Player.cs" Line="27" Column="3" />
+      <File FileName="Peer-to-PeerTank/PeerToPeerGame.cs" Line="120" Column="18" />
+      <File FileName="Peer-to-PeerTank/Tank.cs" Line="17" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True" selected="True">
+          <Node name="Peer-to-PeerTank" expanded="True" />
+          <Node name="ShooterLinux" expanded="True" />
+        </State>
+      </Pad>
+      <Pad Id="ClassPad">
+        <State selected="True" />
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
