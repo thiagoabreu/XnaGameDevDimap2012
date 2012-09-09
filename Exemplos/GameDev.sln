@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShooterLinux", "ShooterLinux\ShooterLinux.csproj", "{1D904D79-C8D9-47CB-8872-7E19780A48E7}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Peer-to-PeerTank", "Peer-to-PeerTank\Peer-to-PeerTank.csproj", "{571F0FC2-4854-4795-BDA4-CDE6BCAEA7E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShooterLinux", "Shooter\ShooterLinux.csproj", "{1D904D79-C8D9-47CB-8872-7E19780A48E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeerToPeerTank", "PeerToPeerTank\PeerToPeerTank.csproj", "{95952005-1DB2-421D-8A72-FA94EE304ADE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,13 +51,29 @@ Global
 		{571F0FC2-4854-4795-BDA4-CDE6BCAEA7E5}.Release|x86.Build.0 = Release|x86
 		{571F0FC2-4854-4795-BDA4-CDE6BCAEA7E5}.Release|Xbox 360.ActiveCfg = Release|x86
 		{571F0FC2-4854-4795-BDA4-CDE6BCAEA7E5}.Release|Xbox 360.Build.0 = Release|x86
+		{95952005-1DB2-421D-8A72-FA94EE304ADE}.Debug|Mixed Platforms.ActiveCfg = Debug|Mixed Platforms
+		{95952005-1DB2-421D-8A72-FA94EE304ADE}.Debug|Mixed Platforms.Build.0 = Debug|Mixed Platforms
+		{95952005-1DB2-421D-8A72-FA94EE304ADE}.Debug|Windows Phone.ActiveCfg = Debug|Mixed Platforms
+		{95952005-1DB2-421D-8A72-FA94EE304ADE}.Debug|Windows Phone.Build.0 = Debug|Mixed Platforms
+		{95952005-1DB2-421D-8A72-FA94EE304ADE}.Debug|x86.ActiveCfg = Debug|Mixed Platforms
+		{95952005-1DB2-421D-8A72-FA94EE304ADE}.Debug|x86.Build.0 = Debug|Mixed Platforms
+		{95952005-1DB2-421D-8A72-FA94EE304ADE}.Debug|Xbox 360.ActiveCfg = Debug|Mixed Platforms
+		{95952005-1DB2-421D-8A72-FA94EE304ADE}.Debug|Xbox 360.Build.0 = Debug|Mixed Platforms
+		{95952005-1DB2-421D-8A72-FA94EE304ADE}.Release|Mixed Platforms.ActiveCfg = Release|Mixed Platforms
+		{95952005-1DB2-421D-8A72-FA94EE304ADE}.Release|Mixed Platforms.Build.0 = Release|Mixed Platforms
+		{95952005-1DB2-421D-8A72-FA94EE304ADE}.Release|Windows Phone.ActiveCfg = Release|Mixed Platforms
+		{95952005-1DB2-421D-8A72-FA94EE304ADE}.Release|Windows Phone.Build.0 = Release|Mixed Platforms
+		{95952005-1DB2-421D-8A72-FA94EE304ADE}.Release|x86.ActiveCfg = Release|Mixed Platforms
+		{95952005-1DB2-421D-8A72-FA94EE304ADE}.Release|x86.Build.0 = Release|Mixed Platforms
+		{95952005-1DB2-421D-8A72-FA94EE304ADE}.Release|Xbox 360.ActiveCfg = Release|Mixed Platforms
+		{95952005-1DB2-421D-8A72-FA94EE304ADE}.Release|Xbox 360.Build.0 = Release|Mixed Platforms
 		{94686225-7A7C-4F5D-827B-0D53890C5D62}.Debug|Mixed Platforms.Deploy.0 = Debug|Windows Phone
 		{94686225-7A7C-4F5D-827B-0D53890C5D62}.Debug|Windows Phone.Deploy.0 = Debug|Windows Phone
 		{94686225-7A7C-4F5D-827B-0D53890C5D62}.Release|Mixed Platforms.Deploy.0 = Release|Windows Phone
 		{94686225-7A7C-4F5D-827B-0D53890C5D62}.Release|Windows Phone.Deploy.0 = Release|Windows Phone
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = ShooterLinux\ShooterLinux.csproj
+		StartupItem = Peer-to-PeerTank\Peer-to-PeerTank.csproj
 		Policies = $0
 		$0.DotNetNamingPolicy = $1
 		$1.DirectoryNamespaceAssociation = None
