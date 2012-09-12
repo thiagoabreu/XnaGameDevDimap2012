@@ -1,0 +1,11 @@
+C:\Users\ThiagoJedi\Documents\GitHub\XnaGameDevDimap2012\HideSeekWindows\bin\Debug\HideSeekWindows.exe
+C:\Users\ThiagoJedi\Documents\GitHub\XnaGameDevDimap2012\HideSeekWindows\bin\Debug\HideSeekWindows.pdb
+C:\Users\ThiagoJedi\Documents\GitHub\XnaGameDevDimap2012\HideSeekWindows\bin\Debug\Lidgren.Network.dll
+C:\Users\ThiagoJedi\Documents\GitHub\XnaGameDevDimap2012\HideSeekWindows\bin\Debug\MonoGame.Framework.Windows.dll
+C:\Users\ThiagoJedi\Documents\GitHub\XnaGameDevDimap2012\HideSeekWindows\bin\Debug\OpenTK.dll
+C:\Users\ThiagoJedi\Documents\GitHub\XnaGameDevDimap2012\HideSeekWindows\bin\Debug\Tao.Sdl.dll
+C:\Users\ThiagoJedi\Documents\GitHub\XnaGameDevDimap2012\HideSeekWindows\bin\Debug\Lidgren.Network.Windows.dll
+C:\Users\ThiagoJedi\Documents\GitHub\XnaGameDevDimap2012\HideSeekWindows\bin\Debug\Lidgren.Network.xml
+C:\Users\ThiagoJedi\Documents\GitHub\XnaGameDevDimap2012\HideSeekWindows\bin\Debug\Lidgren.Network.Windows.xml
+C:\Users\ThiagoJedi\Documents\GitHub\XnaGameDevDimap2012\HideSeekWindows\obj\x86\Debug\HideSeekWindows.exe
+C:\Users\ThiagoJedi\Documents\GitHub\XnaGameDevDimap2012\HideSeekWindows\obj\x86\Debug\HideSeekWindows.pdb
