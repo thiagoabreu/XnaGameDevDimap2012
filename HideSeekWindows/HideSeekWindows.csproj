@@ -8,7 +8,7 @@
     <ProjectGuid>{3D99735E-D3B2-4439-88E8-804DA7C1BA73}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HideSeekWindows</RootNamespace>
+    <RootNamespace>HideSeek</RootNamespace>
     <AssemblyName>HideSeekWindows</AssemblyName>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,10 +40,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="OpenTK" />
+    <Reference Include="OpenTK">
+      <Package>opentk</Package>
+    </Reference>
     <Reference Include="MonoGame.Framework.Windows" />
-    <Reference Include="Lidgren.Network" />
-    <Reference Include="Tao.Sdl" />
+    <Reference Include="Lidgren.Network">
+      <Package>monogame</Package>
+    </Reference>
+    <Reference Include="Tao.Sdl">
+      <Package>tao-sdl</Package>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
   </ItemGroup>

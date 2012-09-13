@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.GamerServices;
 #endregion
 
-namespace HideSeekWindows
+namespace HideSeek
 {
     /// <summary>
     /// This is the main type for your game
