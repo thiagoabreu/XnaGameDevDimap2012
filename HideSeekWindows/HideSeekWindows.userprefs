@@ -1,14 +1,16 @@
-﻿<Properties>
+﻿<Properties GitUserInfo="UsingMD">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Program.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Game1.cs">
     <Files>
-      <File FileName="Game1.cs" Line="12" Column="19" />
-      <File FileName="Program.cs" Line="7" Column="19" />
+      <File FileName="Game1.cs" Line="39" Column="32" />
+      <File FileName="Program.cs" Line="3" Column="34" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
-          <Node name="HideSeekWindows" expanded="True" selected="True" />
+          <Node name="HideSeekWindows" expanded="True">
+            <Node name="Game1.cs" selected="True" />
+          </Node>
         </State>
       </Pad>
       <Pad Id="ClassPad">

@@ -14,12 +14,12 @@ namespace HideSeek
     /// <summary>
     /// This is the main type for your game
     /// </summary>
-    public class Game1 : Game
+    public class HideSeek : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        public Game1()
+        public HideSeek()
             : base()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -82,11 +82,29 @@ namespace HideSeek
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.LawnGreen);
 
             // TODO: Add your drawing code here
 
             base.Draw(gameTime);
         }
     }
+
+	/// <summary>
+	/// The main class.
+	/// </summary>
+	public static class Program
+	{
+		private static HideSeek game;
+		
+		/// <summary>
+		/// The main entry point for the application.
+		/// </summary>
+		[STAThread]
+		static void Main()
+		{
+			game = new HideSeek();
+			game.Run();
+		}
+	}
 }
