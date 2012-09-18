@@ -35,7 +35,8 @@ namespace HideSeek
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+			// Never gonna give you up.
+			// Never gonna let you down.
             base.Initialize();
         }
 
