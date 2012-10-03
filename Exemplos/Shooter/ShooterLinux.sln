@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShooterLinux", "ShooterLinux.csproj", "{1D904D79-C8D9-47CB-8872-7E19780A48E7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Release|Mixed Platforms = Release|Mixed Platforms
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1D904D79-C8D9-47CB-8872-7E19780A48E7}.Debug|Mixed Platforms.ActiveCfg = Debug|Mixed Platforms
+		{1D904D79-C8D9-47CB-8872-7E19780A48E7}.Debug|Mixed Platforms.Build.0 = Debug|Mixed Platforms
+		{1D904D79-C8D9-47CB-8872-7E19780A48E7}.Release|Mixed Platforms.ActiveCfg = Release|Mixed Platforms
+		{1D904D79-C8D9-47CB-8872-7E19780A48E7}.Release|Mixed Platforms.Build.0 = Release|Mixed Platforms
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = ShooterLinux.csproj
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShooterWindows", "ShooterWindows.csproj", "{D7D9199B-7307-4DAC-A0FA-38D63FFF9E14}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Release|Mixed Platforms = Release|Mixed Platforms
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D7D9199B-7307-4DAC-A0FA-38D63FFF9E14}.Debug|Mixed Platforms.ActiveCfg = Debug|Mixed Platforms
+		{D7D9199B-7307-4DAC-A0FA-38D63FFF9E14}.Debug|Mixed Platforms.Build.0 = Debug|Mixed Platforms
+		{D7D9199B-7307-4DAC-A0FA-38D63FFF9E14}.Release|Mixed Platforms.ActiveCfg = Release|Mixed Platforms
+		{D7D9199B-7307-4DAC-A0FA-38D63FFF9E14}.Release|Mixed Platforms.Build.0 = Release|Mixed Platforms
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = ShooterWindows.csproj
+	EndGlobalSection
+EndGlobal
