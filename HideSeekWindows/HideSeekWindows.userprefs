@@ -1,17 +1,12 @@
 ﻿<Properties GitUserInfo="UsingMD">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="HideSeek.cs">
-    <Files>
-      <File FileName="Mapa.cs" Line="1" Column="1" />
-      <File FileName="HideSeek.cs" Line="1" Column="1" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
-        <State expanded="True">
+        <State expanded="True" selected="True">
           <Node name="HideSeekWindows" expanded="True">
             <Node name="References" expanded="True" />
             <Node name="Properties" expanded="True" />
-            <Node name="HideSeek.cs" selected="True" />
           </Node>
         </State>
       </Pad>

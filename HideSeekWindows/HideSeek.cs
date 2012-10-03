@@ -9,6 +9,8 @@ using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.GamerServices;
 #endregion
 
+//Teste de commit.
+
 namespace HideSeek
 {
     /// <summary>
