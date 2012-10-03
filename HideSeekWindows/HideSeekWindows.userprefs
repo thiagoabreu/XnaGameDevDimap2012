@@ -3,10 +3,9 @@
   <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
-        <State expanded="True" selected="True">
+        <State expanded="True">
           <Node name="HideSeekWindows" expanded="True">
-            <Node name="References" expanded="True" />
-            <Node name="Properties" expanded="True" />
+            <Node name="Properties" selected="True" />
           </Node>
         </State>
       </Pad>
