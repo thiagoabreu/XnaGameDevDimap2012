@@ -53,7 +53,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\" />
-    <Folder Include="Imagens\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -63,4 +62,10 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <None Include="Content\Ground.png" />
+    <None Include="Content\Hider.png" />
+    <None Include="Content\Seeker.png" />
+    <None Include="Content\Wall.png" />
+  </ItemGroup>
 </Project>

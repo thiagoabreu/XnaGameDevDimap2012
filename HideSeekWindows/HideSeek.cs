@@ -21,6 +21,11 @@ namespace HideSeek
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+		Vector2 mPosition = new Vector2(0, 0);	//Teste de sprite
+		Texture2D mSpriteTexture;				//Teste de sprite
+		
+
+
         public HideSeek()
             : base()
         {
@@ -52,6 +57,7 @@ namespace HideSeek
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+			mSpriteTexture = Content.Load<Texture2D>("Seeker"); //Teste
         }
 
         /// <summary>
@@ -87,6 +93,12 @@ namespace HideSeek
             GraphicsDevice.Clear(Color.LawnGreen);
 
             // TODO: Add your drawing code here
+			//spriteBatch.Begin();
+			//spriteBatch.Draw(mSpriteTexture, mPosition, Color.White);
+			//spriteBatch.End();
+			spriteBatch.Begin();										//teste
+			spriteBatch.Draw(mSpriteTexture, mPosition, Color.White);	//teste
+			spriteBatch.End();											//teste
 
             base.Draw(gameTime);
         }
