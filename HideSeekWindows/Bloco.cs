@@ -2,21 +2,17 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
-namespace HideSeek 
+namespace HideSeek
+{
+	public class Bloco
 	{
 
-	public class Personagem 
-	{
 		private Vector2 posicao;
 		private Texture2D sprite;
-		private bool active;
-		private int dir;
-		private int cor;
-		private Color[] cores;
+		private bool parede;
 
-		public Personagem () 
+		public Bloco ()
 		{
 		}
 
@@ -25,28 +21,30 @@ namespace HideSeek
 			return posicao;
 		}
 
-		//Retorna o sprite do personagem. O tamanho do sprite é utilizado nos métodos de colisão.
-		public Texture2D getSprite ()
+		public Texture2D getSprite()
 		{
 			return sprite;
 		}
 
-		public void Initialize (Vector2 posicaoInicial)
+		public void Initialize (bool parede_, Vector2 posicaoInicial)
 		{
+			parede = parede_;
 			posicao = posicaoInicial;
 		}
+
 		public void LoadContent(ContentManager theContentManager, string nomeDoArquivo)	 {
 			sprite = theContentManager.Load<Texture2D>(nomeDoArquivo);	
 		}
 
 		public void Draw(SpriteBatch theSpriteBatch) {
+			//theSpriteBatch.Draw(sprite, posicao, Color.White);
 			theSpriteBatch.Draw(sprite, posicao, Color.White);
 		}
 
-		public void Update (Vector2 novaPosicao)
+		public bool ehParede ()
 		{
-			posicao = novaPosicao;
+			return parede;
 		}
-	}	
+	}
 }
 

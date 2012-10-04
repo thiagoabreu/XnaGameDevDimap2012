@@ -4,6 +4,7 @@ namespace HideSeek
 {
 	public class Mapa
 	{
+
 		public Mapa ()
 		{
 		}

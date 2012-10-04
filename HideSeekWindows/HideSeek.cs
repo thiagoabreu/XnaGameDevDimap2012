@@ -9,21 +9,16 @@ using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.GamerServices;
 #endregion
 
-//Teste de commit.123
-
 namespace HideSeek
 {
-    /// <summary>
-    /// This is the main type for your game
-    /// </summary>
-    public class HideSeek : Game
+
+	public class HideSeek : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-		Vector2 mPosition = new Vector2(0, 0);	//Teste de sprite
-		Texture2D mSpriteTexture;				//Teste de sprite
-		
+		Personagem jogador;
+		Bloco bloco;
 
 
         public HideSeek()
@@ -31,6 +26,9 @@ namespace HideSeek
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+			jogador = new Personagem();
+			bloco = new Bloco();
         }
 
         /// <summary>
@@ -41,9 +39,8 @@ namespace HideSeek
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-			// Never gonna give you up.
-			// Never gonna let you down.
+			jogador.Initialize(new Vector2(5f, 8f));
+			bloco.Initialize(true, new Vector2(64f,64f));
             base.Initialize();
         }
 
@@ -57,7 +54,8 @@ namespace HideSeek
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-			mSpriteTexture = Content.Load<Texture2D>("Seeker"); //Teste
+			jogador.LoadContent(Content,"Seeker");
+			bloco.LoadContent(Content,"Wall");
         }
 
         /// <summary>
@@ -74,12 +72,47 @@ namespace HideSeek
         /// checking for collisions, gathering input, and playing audio.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        protected override void Update(GameTime gameTime)
-        {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+        protected override void Update (GameTime gameTime)
+		{
 
-            // TODO: Add your update logic here
+			Rectangle jogadorBox = Constantes.BoundingBox (jogador.getPosicao (), jogador.getSprite ());
+			Rectangle blocoBox = Constantes.BoundingBox (bloco.getPosicao (), bloco.getSprite ());
+
+			Vector2 novaPosicao = jogador.getPosicao ();
+
+			if (Keyboard.GetState ().IsKeyDown (Keys.Down)) {
+				novaPosicao.Y += Constantes.velocidadeSeeker;
+				jogadorBox.Y = (int)novaPosicao.Y;
+
+				if (jogadorBox.Intersects (blocoBox)) {
+					novaPosicao.Y = blocoBox.Y - jogadorBox.Height;
+				}
+
+			} else if (Keyboard.GetState ().IsKeyDown (Keys.Up)) {
+				novaPosicao.Y -= Constantes.velocidadeSeeker;
+				jogadorBox.Y = (int)novaPosicao.Y;
+				
+				if (jogadorBox.Intersects (blocoBox)) {
+					novaPosicao.Y = blocoBox.Y + jogadorBox.Height;
+				}
+
+			} else if (Keyboard.GetState ().IsKeyDown (Keys.Left)) {
+				novaPosicao.X -= Constantes.velocidadeSeeker;
+				jogadorBox.X = (int)novaPosicao.X;
+				
+				if (jogadorBox.Intersects (blocoBox)) {
+					novaPosicao.X = blocoBox.X + blocoBox.Width;
+				}
+
+			} else  if (Keyboard.GetState ().IsKeyDown (Keys.Right)) {
+				novaPosicao.X += Constantes.velocidadeSeeker;
+				jogadorBox.X = (int)novaPosicao.X;
+				
+				if (jogadorBox.Intersects (blocoBox)) {
+					novaPosicao.X = blocoBox.X - jogadorBox.Width;
+				}
+			}
+				jogador.Update(novaPosicao);
 
             base.Update(gameTime);
         }
@@ -90,15 +123,12 @@ namespace HideSeek
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.LawnGreen);
+            GraphicsDevice.Clear(Color.Black);
 
-            // TODO: Add your drawing code here
-			//spriteBatch.Begin();
-			//spriteBatch.Draw(mSpriteTexture, mPosition, Color.White);
-			//spriteBatch.End();
-			spriteBatch.Begin();										//teste
-			spriteBatch.Draw(mSpriteTexture, mPosition, Color.White);	//teste
-			spriteBatch.End();											//teste
+			spriteBatch.Begin();
+			bloco.Draw(spriteBatch);
+			jogador.Draw(spriteBatch);
+			spriteBatch.End();
 
             base.Draw(gameTime);
         }

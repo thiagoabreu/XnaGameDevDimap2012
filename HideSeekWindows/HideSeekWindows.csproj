@@ -39,6 +39,8 @@
     <Compile Include="Mapa.cs" />
     <Compile Include="HideSeek.cs" />
     <Compile Include="Personagem.cs" />
+    <Compile Include="Constantes.cs" />
+    <Compile Include="Bloco.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="OpenTK" />
@@ -63,9 +65,15 @@
   </Target>
   -->
   <ItemGroup>
-    <None Include="Content\Ground.png" />
     <None Include="Content\Hider.png" />
-    <None Include="Content\Seeker.png" />
-    <None Include="Content\Wall.png" />
+    <None Include="Content\Seeker.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\Wall.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\Floor.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>
