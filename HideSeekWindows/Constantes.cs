@@ -21,6 +21,39 @@ namespace HideSeek
 		public const String wallSprite = "Wall";
 		public const String floorSprite = "Floor";
 
+		public const String mapa1 = "PPPPPPPPPPPPPPP" +
+									"PCCCCCCCCCCCCCP" +
+									"PCPPPCPPPCPPPCP" +
+									"PCPCCCCPCCCCPCP" +
+									"PCPCPPCCCPPCPCP" +
+									"PCCCPCCPCCPCCCP" +
+									"PCPCCCPPPCCCPCP" +
+									"PCPPCPPPPPCPPCP" +
+									"PCPCCCPPPCCCPCP" +
+									"PCCCPCCPCCPCCCP" +
+									"PCPCPPCCCPPCPCP" +
+									"PCPCCCCPCCCCPCP" +
+									"PCPPPCPPPCPPPCP" +
+									"PCCCCCCCCCCCCCP" +
+									"PPPPPPPPPPPPPPP";
+
+		public const String mapa2 = "PPPPPPPPPPPPPPP" +
+									"PCCCCCCCCCCCCCP" +
+									"PCPPCCPPPCPPPCP" +
+									"PCPCCCCPCCCCPCP" +
+									"PCPCPPCCCPPCPCP" +
+									"PCCCPCCPCCPCCCP" +
+									"PCPCCCPPPCCCPCP" +
+									"PCPPCPPPPPCPPCP" +
+									"PCPCCCPPPCCCPCP" +
+									"PCCCPCCPCCPCCCP" +
+									"PCPCPPCCCPPCPCP" +
+									"PCPCCCCPCCCCPCP" +
+									"PCPPPCPPPCPPPCP" +
+									"PCCCCCCCCCCCCCP" +
+									"PPPPPPPPPPPPPPP";
+
+
 		public static Rectangle BoundingBox (Vector2 posicao, Texture2D sprite)
 		{
 			return new Rectangle((int)posicao.X, (int) posicao.Y, sprite.Width, sprite.Height);

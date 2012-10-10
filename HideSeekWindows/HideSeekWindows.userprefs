@@ -2,11 +2,11 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" ActiveRuntime="MS.NET" />
   <MonoDevelop.Ide.Workbench ActiveDocument="HideSeek.cs">
     <Files>
-      <File FileName="Personagem.cs" Line="14" Column="16" />
-      <File FileName="Constantes.cs" Line="16" Column="37" />
-      <File FileName="HideSeek.cs" Line="56" Column="28" />
-      <File FileName="Mapa.cs" Line="22" Column="26" />
-      <File FileName="Bloco.cs" Line="3" Column="39" />
+      <File FileName="Personagem.cs" Line="39" Column="73" />
+      <File FileName="Constantes.cs" Line="15" Column="42" />
+      <File FileName="Mapa.cs" Line="60" Column="1" />
+      <File FileName="Bloco.cs" Line="14" Column="23" />
+      <File FileName="HideSeek.cs" Line="46" Column="25" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">

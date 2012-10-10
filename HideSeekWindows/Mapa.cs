@@ -33,7 +33,7 @@ namespace HideSeek
 				for (int i = 0; i < Constantes.tamLabirinto; i++){
 					for (int j = 0; j < Constantes.tamLabirinto; j++){
 
-						int indice = i*Constantes.tamLabirinto + j;
+						int indice = j*Constantes.tamLabirinto + i;
 						bool parede = true;
 
 						if (descricao[indice] == 'P'){
