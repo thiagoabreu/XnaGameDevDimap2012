@@ -17,7 +17,7 @@ namespace HideSeek
 		{
 			blocos = new Bloco[15][];
 			for (int i = 0; i < 15; i++) {
-				blocos [i] = new Bloco[15];
+				blocos[i] = new Bloco[15];
 			}
 			for (int i = 0; i < 15; i++) {
 				for (int j = 0; j < 15; j++) {
