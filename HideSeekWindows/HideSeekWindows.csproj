@@ -65,7 +65,9 @@
   </Target>
   -->
   <ItemGroup>
-    <None Include="Content\Hider.png" />
+    <None Include="Content\Hider.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Content\Seeker.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -73,6 +75,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Content\Floor.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\Seeker2.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

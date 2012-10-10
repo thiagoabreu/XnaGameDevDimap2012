@@ -35,8 +35,8 @@ namespace HideSeek
 		{
 			posicao = posicaoInicial;
 		}
-		public void LoadContent(ContentManager theContentManager, string nomeDoArquivo)	 {
-			sprite = theContentManager.Load<Texture2D>(nomeDoArquivo);	
+		public void LoadContent(ContentManager theContentManager)	 {
+			sprite = theContentManager.Load<Texture2D>(Constantes.seekerSprite);	
 		}
 
 		public void Draw(SpriteBatch theSpriteBatch) {

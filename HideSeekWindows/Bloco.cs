@@ -2,6 +2,7 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace HideSeek
 {
@@ -32,8 +33,13 @@ namespace HideSeek
 			posicao = posicaoInicial;
 		}
 
-		public void LoadContent(ContentManager theContentManager, string nomeDoArquivo)	 {
-			sprite = theContentManager.Load<Texture2D>(nomeDoArquivo);	
+		public void LoadContent (ContentManager theContentManager)
+		{
+			if (parede) {
+				sprite = theContentManager.Load<Texture2D> (Constantes.wallSprite);	
+			} else {
+				sprite = theContentManager.Load<Texture2D> (Constantes.floorSprite);	
+			}
 		}
 
 		public void Draw(SpriteBatch theSpriteBatch) {
@@ -41,10 +47,12 @@ namespace HideSeek
 			theSpriteBatch.Draw(sprite, posicao, Color.White);
 		}
 
-		public bool ehParede ()
+		//Retorna true se o bloco for uma parede, false caso contrario.
+		public bool Parede ()
 		{
 			return parede;
 		}
 	}
 }
+
 

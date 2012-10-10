@@ -11,7 +11,10 @@ namespace HideSeek
 	//Considere como sendo um arquivo de configuração para facilitar mudanças em variáveis globais do jogo.
 	public static class Constantes
 	{
-		public const float velocidadeSeeker = 6.0f;
+		//Variaveis numericas
+		public const float velocidadeSeeker = 4.2f;
+		public const int tamLabirinto = 6;
+
 		
 		//Nomes dos sprites.
 		public const String seekerSprite = "Seeker";
@@ -22,8 +25,7 @@ namespace HideSeek
 		{
 			return new Rectangle((int)posicao.X, (int) posicao.Y, sprite.Width, sprite.Height);
 		}
-
-
+		
 	}
 
 
