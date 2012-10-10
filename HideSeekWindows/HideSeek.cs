@@ -79,100 +79,76 @@ namespace HideSeek
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update (GameTime gameTime)
 		{
-			if (Keyboard.GetState ().IsKeyDown (Keys.Down)) {
-				Vector2 posicao = jogador.getPosicao ();
-				bool colisao = false;
+			KeyboardState currentState = Keyboard.GetState();
+
+			if (currentState.IsKeyDown (Keys.Down)) {
+				Vector2 posicao = new Vector2(jogador.getPosicao ().X, jogador.getPosicao().Y);
 
 				posicao.Y += Constantes.velocidadeSeeker;
-				Rectangle jogadorBox = Constantes.BoundingBox (jogador.getPosicao (), jogador.getSprite ());
+				Rectangle jogadorBox = Constantes.BoundingBox (posicao, jogador.getSprite ());
 				
 				for (int i = 0; i < Constantes.tamLabirinto; i++) {
 					for (int j = 0; j < Constantes.tamLabirinto; j++) {
 
 						Bloco bloco = mapa.GetBloco (i, j);
 						Rectangle blocoBox = Constantes.BoundingBox (bloco.getPosicao (), bloco.getSprite ());
-						
-						if (bloco.Parede () && jogadorBox.Intersects (blocoBox)) {
+
+						if (bloco.Parede () && blocoBox.Intersects(jogadorBox)){
 							posicao.Y = blocoBox.Y - jogadorBox.Height;
-							colisao = true;
-							break;
 						}
-					}
-					if (colisao) {
-						break;
 					}
 				}
 				jogador.Update(posicao);
-			} else if (Keyboard.GetState ().IsKeyDown (Keys.Up)) {
+			} else if (currentState.IsKeyDown (Keys.Up)) {
 
-				Vector2 posicao = jogador.getPosicao ();
-				bool colisao = false;
-
+				Vector2 posicao = new Vector2(jogador.getPosicao ().X, jogador.getPosicao().Y);
 				posicao.Y -= Constantes.velocidadeSeeker;
-				Rectangle jogadorBox = Constantes.BoundingBox (jogador.getPosicao (), jogador.getSprite ());
+				Rectangle jogadorBox = Constantes.BoundingBox (posicao, jogador.getSprite ());
 
 				for (int i = 0; i < Constantes.tamLabirinto; i++) {
 					for (int j = 0; j < Constantes.tamLabirinto; j++) {
 						Bloco bloco = mapa.GetBloco (i, j);
 						Rectangle blocoBox = Constantes.BoundingBox (bloco.getPosicao (), bloco.getSprite ());
 
-						if (bloco.Parede () && jogadorBox.Intersects (blocoBox)) {
+						if (bloco.Parede () && blocoBox.Intersects(jogadorBox)) {
 							posicao.Y = blocoBox.Y + blocoBox.Height;
-							colisao = true;
-							break;
 						}
-					}
-					if (colisao) {
-						break;
 					}
 				}
 				jogador.Update(posicao);
-			} else if (Keyboard.GetState ().IsKeyDown (Keys.Left)) {
+			} else if (currentState.IsKeyDown (Keys.Left)) {
 			
-				Vector2 posicao = jogador.getPosicao ();
-				bool colisao = false;
-
+				Vector2 posicao = new Vector2(jogador.getPosicao ().X, jogador.getPosicao().Y);
 				posicao.X -= Constantes.velocidadeSeeker;
-				Rectangle jogadorBox = Constantes.BoundingBox (jogador.getPosicao (), jogador.getSprite ());
+				Rectangle jogadorBox = Constantes.BoundingBox (posicao, jogador.getSprite ());
 
 				for (int i = 0; i < Constantes.tamLabirinto; i++) {
 					for (int j = 0; j < Constantes.tamLabirinto; j++) {
 						Bloco bloco = mapa.GetBloco (i, j);
 						Rectangle blocoBox = Constantes.BoundingBox (bloco.getPosicao (), bloco.getSprite ());
 
-						if (bloco.Parede () && jogadorBox.Intersects (blocoBox)) {
+						if (bloco.Parede () && blocoBox.Intersects(jogadorBox)) {
 							posicao.X = blocoBox.X + blocoBox.Width;
-							colisao = true;
-							break;
 						}
 		
 					}
-					if (colisao) {
-						break;
-					}
+
 				}
 				jogador.Update(posicao);
-			} else if (Keyboard.GetState ().IsKeyDown (Keys.Right)) {
+			} else if (currentState.IsKeyDown (Keys.Right)) {
 
-				Vector2 posicao = jogador.getPosicao ();
-				bool colisao = false;
-
+				Vector2 posicao = new Vector2(jogador.getPosicao ().X, jogador.getPosicao().Y);
 				posicao.X += Constantes.velocidadeSeeker;
-				Rectangle jogadorBox = Constantes.BoundingBox (jogador.getPosicao (), jogador.getSprite ());
+				Rectangle jogadorBox = Constantes.BoundingBox (posicao, jogador.getSprite ());
 
 				for (int i = 0; i < Constantes.tamLabirinto; i++) {
 					for (int j = 0; j < Constantes.tamLabirinto; j++) {
 						Bloco bloco = mapa.GetBloco (i, j);
 						Rectangle blocoBox = Constantes.BoundingBox (bloco.getPosicao (), bloco.getSprite ());
 
-						if (bloco.Parede () && jogadorBox.Intersects (blocoBox)) {
+						if (bloco.Parede () && blocoBox.Intersects(jogadorBox)) {
 							posicao.X = blocoBox.X - jogadorBox.Width;
-							colisao = true;
-							break;
 						}
-					}
-					if (colisao) {
-						break;
 					}
 				}
 				jogador.Update(posicao);
