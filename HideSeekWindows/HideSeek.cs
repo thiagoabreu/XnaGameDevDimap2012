@@ -18,9 +18,8 @@ namespace HideSeek
         SpriteBatch spriteBatch;
 
 		Personagem jogador;
-		Bloco bloco;
-
-
+		Mapa mapa;
+		
         public HideSeek()
             : base()
         {
@@ -28,7 +27,9 @@ namespace HideSeek
             Content.RootDirectory = "Content";
 
 			jogador = new Personagem();
-			bloco = new Bloco();
+			//	bloco = new Bloco();
+
+			mapa = new Mapa(new Vector2 (0f,0f));
         }
 
         /// <summary>
@@ -39,8 +40,8 @@ namespace HideSeek
         /// </summary>
         protected override void Initialize()
         {
-			jogador.Initialize(new Vector2(5f, 8f));
-			bloco.Initialize(true, new Vector2(64f,64f));
+			jogador.Initialize(new Vector2(32f, 32f));
+			mapa.Initialize(Constantes.mapa2);
             base.Initialize();
         }
 
@@ -52,10 +53,9 @@ namespace HideSeek
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // TODO: use this.Content to load your game content here
-			jogador.LoadContent(Content,"Seeker");
-			bloco.LoadContent(Content,"Wall");
+			            
+			jogador.LoadContent(Content);
+			mapa.LoadContent(Content);
         }
 
         /// <summary>
@@ -74,59 +74,95 @@ namespace HideSeek
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update (GameTime gameTime)
 		{
+			KeyboardState currentState = Keyboard.GetState();
 
-			Rectangle jogadorBox = Constantes.BoundingBox (jogador.getPosicao (), jogador.getSprite ());
-			Rectangle blocoBox = Constantes.BoundingBox (bloco.getPosicao (), bloco.getSprite ());
+			if (currentState.IsKeyDown (Keys.Down)) {
+				Vector2 posicao = new Vector2(jogador.getPosicao ().X, jogador.getPosicao().Y);
 
-			Vector2 novaPosicao = jogador.getPosicao ();
-
-			if (Keyboard.GetState ().IsKeyDown (Keys.Down)) {
-				novaPosicao.Y += Constantes.velocidadeSeeker;
-				jogadorBox.Y = (int)novaPosicao.Y;
-
-				if (jogadorBox.Intersects (blocoBox)) {
-					novaPosicao.Y = blocoBox.Y - jogadorBox.Height;
-				}
-
-			} else if (Keyboard.GetState ().IsKeyDown (Keys.Up)) {
-				novaPosicao.Y -= Constantes.velocidadeSeeker;
-				jogadorBox.Y = (int)novaPosicao.Y;
+				posicao.Y += Constantes.velocidadeSeeker;
+				Rectangle jogadorBox = Constantes.BoundingBox (posicao, jogador.getSprite ());
 				
-				if (jogadorBox.Intersects (blocoBox)) {
-					novaPosicao.Y = blocoBox.Y + jogadorBox.Height;
-				}
+				for (int i = 0; i < Constantes.tamLabirinto; i++) {
+					for (int j = 0; j < Constantes.tamLabirinto; j++) {
 
-			} else if (Keyboard.GetState ().IsKeyDown (Keys.Left)) {
-				novaPosicao.X -= Constantes.velocidadeSeeker;
-				jogadorBox.X = (int)novaPosicao.X;
-				
-				if (jogadorBox.Intersects (blocoBox)) {
-					novaPosicao.X = blocoBox.X + blocoBox.Width;
-				}
+						Bloco bloco = mapa.GetBloco (i, j);
+						Rectangle blocoBox = Constantes.BoundingBox (bloco.getPosicao (), bloco.getSprite ());
 
-			} else  if (Keyboard.GetState ().IsKeyDown (Keys.Right)) {
-				novaPosicao.X += Constantes.velocidadeSeeker;
-				jogadorBox.X = (int)novaPosicao.X;
-				
-				if (jogadorBox.Intersects (blocoBox)) {
-					novaPosicao.X = blocoBox.X - jogadorBox.Width;
+						if (bloco.Parede () && blocoBox.Intersects(jogadorBox)){
+							posicao.Y = blocoBox.Y - jogadorBox.Height;
+						}
+					}
 				}
+				jogador.Update(posicao);
+			} else if (currentState.IsKeyDown (Keys.Up)) {
+
+				Vector2 posicao = new Vector2(jogador.getPosicao ().X, jogador.getPosicao().Y);
+				posicao.Y -= Constantes.velocidadeSeeker;
+				Rectangle jogadorBox = Constantes.BoundingBox (posicao, jogador.getSprite ());
+
+				for (int i = 0; i < Constantes.tamLabirinto; i++) {
+					for (int j = 0; j < Constantes.tamLabirinto; j++) {
+						Bloco bloco = mapa.GetBloco (i, j);
+						Rectangle blocoBox = Constantes.BoundingBox (bloco.getPosicao (), bloco.getSprite ());
+
+						if (bloco.Parede () && blocoBox.Intersects(jogadorBox)) {
+							posicao.Y = blocoBox.Y + blocoBox.Height;
+						}
+					}
+				}
+				jogador.Update(posicao);
+			} else if (currentState.IsKeyDown (Keys.Left)) {
+			
+				Vector2 posicao = new Vector2(jogador.getPosicao ().X, jogador.getPosicao().Y);
+				posicao.X -= Constantes.velocidadeSeeker;
+				Rectangle jogadorBox = Constantes.BoundingBox (posicao, jogador.getSprite ());
+
+				for (int i = 0; i < Constantes.tamLabirinto; i++) {
+					for (int j = 0; j < Constantes.tamLabirinto; j++) {
+						Bloco bloco = mapa.GetBloco (i, j);
+						Rectangle blocoBox = Constantes.BoundingBox (bloco.getPosicao (), bloco.getSprite ());
+
+						if (bloco.Parede () && blocoBox.Intersects(jogadorBox)) {
+							posicao.X = blocoBox.X + blocoBox.Width;
+						}
+		
+					}
+
+				}
+				jogador.Update(posicao);
+			} else if (currentState.IsKeyDown (Keys.Right)) {
+
+				Vector2 posicao = new Vector2(jogador.getPosicao ().X, jogador.getPosicao().Y);
+				posicao.X += Constantes.velocidadeSeeker;
+				Rectangle jogadorBox = Constantes.BoundingBox (posicao, jogador.getSprite ());
+
+				for (int i = 0; i < Constantes.tamLabirinto; i++) {
+					for (int j = 0; j < Constantes.tamLabirinto; j++) {
+						Bloco bloco = mapa.GetBloco (i, j);
+						Rectangle blocoBox = Constantes.BoundingBox (bloco.getPosicao (), bloco.getSprite ());
+
+						if (bloco.Parede () && blocoBox.Intersects(jogadorBox)) {
+							posicao.X = blocoBox.X - jogadorBox.Width;
+						}
+					}
+				}
+				jogador.Update(posicao);
 			}
-				jogador.Update(novaPosicao);
-
-            base.Update(gameTime);
-        }
+				
+			base.Update (gameTime);
+		}
+        
 
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        protected override void Draw(GameTime gameTime)
+	protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
 
 			spriteBatch.Begin();
-			bloco.Draw(spriteBatch);
+			mapa.Draw(spriteBatch);
 			jogador.Draw(spriteBatch);
 			spriteBatch.End();
 
