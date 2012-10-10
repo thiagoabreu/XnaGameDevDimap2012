@@ -54,8 +54,70 @@ namespace HideSeek
 		{
 			for (int i = 0; i < Constantes.tamLabirinto; i++) {
 				for (int j = 0; j < Constantes.tamLabirinto; j++) {
-					blocos[i][j].LoadContent(theContentManager);
+					String arquivo = defineSprite(i,j);
+					blocos[i][j].LoadContent(theContentManager,arquivo);
 				}
+			}
+		}
+
+		private String defineSprite (int i, int j)
+		{
+			if (blocos[i][j].Parede()){
+
+				bool paredeEsq = false;
+				bool paredeDir = false;
+				bool paredeCima = false;
+				bool paredeBaixo = false;
+
+				//Usando curto circuito pra ele nao chegar a valores negativos nos indices.
+				if (i > 0 && blocos[i-1][j].Parede()){
+					paredeEsq = true;
+				}
+				if (j > 0 && blocos[i][j-1].Parede()){
+					paredeCima = true;
+				}
+				if (i < Constantes.tamLabirinto -1 && blocos[i+1][j].Parede()){
+					paredeDir = true;
+				}
+				if (j < Constantes.tamLabirinto -1 && blocos[i][j+1].Parede()){
+					paredeBaixo = true;
+				}
+			
+				if (paredeEsq && paredeDir && paredeCima && paredeBaixo){
+					return "Wall_Cross";
+				}  else if (paredeEsq && paredeDir && !paredeCima && !paredeBaixo){
+					return "Wall_Line";
+				} else if (!paredeEsq && !paredeDir && paredeCima && paredeBaixo){
+					return "Wall_Line2";
+				} else if (paredeEsq && paredeDir && !paredeCima && paredeBaixo){
+					return "Wall_T";
+				} else if (paredeEsq && !paredeDir && paredeCima && paredeBaixo){
+					return "Wall_T2";
+				} else if (paredeEsq && paredeDir && paredeCima && !paredeBaixo){
+					return "Wall_T3";
+				} else if (!paredeEsq && paredeDir && paredeCima && paredeBaixo){
+					return "Wall_T4";
+				} else if (!paredeEsq && paredeDir && !paredeCima && !paredeBaixo){
+					return "Wall_Corner";
+				} else if (!paredeEsq && !paredeDir && !paredeCima && paredeBaixo){
+					return "Wall_Corner2";
+				} else if (paredeEsq && !paredeDir && !paredeCima && !paredeBaixo){
+					return "Wall_Corner3";
+				} else if (!paredeEsq && !paredeDir && paredeCima && !paredeBaixo){
+					return "Wall_Corner4";
+				} else if (!paredeEsq && paredeDir && paredeCima && !paredeBaixo){
+					return "Wall_L";
+				} else if (!paredeEsq && paredeDir && !paredeCima && paredeBaixo){
+					return "Wall_L2";	
+				} else if (paredeEsq && !paredeDir && !paredeCima && paredeBaixo){
+					return "Wall_L3";
+				} else if (paredeEsq && !paredeDir && paredeCima && !paredeBaixo){
+					return "Wall_L4";
+				} else { //if (!paredeEsq && !paredeDir && !paredeCima && !paredeBaixo)
+					return "Wall";
+				}
+			} else {
+				return "Floor";	
 			}
 		}
 

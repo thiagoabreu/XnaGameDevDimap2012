@@ -33,13 +33,9 @@ namespace HideSeek
 			posicao = posicaoInicial;
 		}
 
-		public void LoadContent (ContentManager theContentManager)
+		public void LoadContent (ContentManager theContentManager, String arquivo)
 		{
-			if (parede) {
-				sprite = theContentManager.Load<Texture2D> (Constantes.wallSprite);	
-			} else {
-				sprite = theContentManager.Load<Texture2D> (Constantes.floorSprite);	
-			}
+			sprite = theContentManager.Load<Texture2D>(arquivo);
 		}
 
 		public void Draw(SpriteBatch theSpriteBatch) {
