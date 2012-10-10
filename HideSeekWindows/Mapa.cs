@@ -15,12 +15,12 @@ namespace HideSeek
 
 		public Mapa (Vector2 posicao_)
 		{
-			blocos = new Bloco[6][];
-			for (int i = 0; i < 6; i++) {
-				blocos [i] = new Bloco[6];
+			blocos = new Bloco[15][];
+			for (int i = 0; i < 15; i++) {
+				blocos [i] = new Bloco[15];
 			}
-			for (int i = 0; i < 6; i++) {
-				for (int j = 0; j < 6; j++) {
+			for (int i = 0; i < 15; i++) {
+				for (int j = 0; j < 15; j++) {
 					blocos[i][j] = new Bloco();
 				}
 			}

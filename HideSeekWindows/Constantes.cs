@@ -13,7 +13,7 @@ namespace HideSeek
 	{
 		//Variaveis numericas
 		public const float velocidadeSeeker = 6.0f;
-		public const int tamLabirinto = 6;
+		public const int tamLabirinto = 15;
 
 		
 		//Nomes dos sprites.

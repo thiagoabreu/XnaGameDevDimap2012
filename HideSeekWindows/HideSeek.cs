@@ -41,12 +41,21 @@ namespace HideSeek
         protected override void Initialize()
         {
 			jogador.Initialize(new Vector2(32f, 32f));
-			mapa.Initialize("PPPPPP" +
-			                "PCCCCP" +
-			                "PCPCCP" +
-			                "PCCCCP" +
-			                "PCCCCP" +
-			                "PPPPPP");
+			mapa.Initialize("PPPPPPPPPPPPPPP" +
+			                "PCCCCCCCCCCCCCP" +
+			                "PCCCPPCCCCCCPCP" +
+			                "PCPCCCCCCCCCPCP" +
+			                "PCPCPPCPCPPCPCP" +
+			                "PCCCPCCPCCPCCCP" +
+			                "PCCCCCCPCCCCCCP" +
+			                "PCCCPPPPPPPCCCP" +
+			                "PCCCCCPPPCCCCCP" +
+			                "PCCPPCCPCCPPCCP" +
+			                "PCCCPCCCCCPCCCP" +
+			                "PCPCPCPPPCPCPCP" +
+			                "PCPPCCCPCCCPPCP" +
+			                "PCCCCCCCCCCCCCP" +
+			                "PPPPPPPPPPPPPPP");
             base.Initialize();
         }
 
