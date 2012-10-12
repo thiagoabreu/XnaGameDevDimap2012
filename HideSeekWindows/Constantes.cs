@@ -11,7 +11,7 @@ namespace HideSeek
     public static class Constantes
     {
         //Variaveis numericas
-        public const float velocidadeSeeker = 32.0f;
+        public const float velocidadeSeeker = 4.0f;
         public const int tamLabirinto = 15;
 
         
@@ -50,9 +50,9 @@ namespace HideSeek
                                     "PCCCCCCCCCCCCCP" +
                                     "PPPPPPPPPPPPPPP";
 
-        public static Rectangle BoundingBox (Vector2 posicao, Texture2D sprite)
+        public static Rectangle BoundingBox (Vector2 posicao)
         {
-            return new Rectangle ((int)posicao.X, (int)posicao.Y, sprite.Width, sprite.Height);
+            return new Rectangle ((int)posicao.X, (int)posicao.Y, 32,32);
         }
 
         public static bool collision (Rectangle r1, Rectangle r2)
