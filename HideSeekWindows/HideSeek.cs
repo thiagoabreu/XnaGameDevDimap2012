@@ -55,7 +55,7 @@ namespace HideSeek
                         
             jogador.LoadContent (Content);
             mapa.LoadContent (Content);
-        }
+                    }
 
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload
@@ -72,13 +72,17 @@ namespace HideSeek
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update (GameTime gameTime)
-		{
-			KeyboardState currentState = Keyboard.GetState();
+        {
+
+            KeyboardState currentState = Keyboard.GetState();
 
             jogador.Update(Keyboard.GetState(), mapa);
-				
-			base.Update (gameTime);
-		}
+
+            if (currentState.IsKeyDown(Keys.Escape))
+                this.Exit();
+                
+            base.Update(gameTime);
+        }
 
         /// <summary>
         /// This is called when the game should draw itself.
@@ -87,12 +91,10 @@ namespace HideSeek
         protected override void Draw (GameTime gameTime)
         {
             GraphicsDevice.Clear (Color.Black);
-
-			spriteBatch.Begin();
-			mapa.Draw(spriteBatch);
-			jogador.Draw(spriteBatch, gameTime);
-			spriteBatch.End();
-
+            spriteBatch.Begin();
+            mapa.Draw(spriteBatch);
+            jogador.Draw(spriteBatch, gameTime);
+            spriteBatch.End();
             base.Draw (gameTime);
         }
     }
@@ -111,7 +113,7 @@ namespace HideSeek
         static void Main ()
         {
             game = new HideSeek ();
-            game.Run ();
+            game.Run();
         }
     }
 }

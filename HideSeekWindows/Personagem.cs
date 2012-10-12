@@ -30,6 +30,7 @@ namespace HideSeek
             animationRec = new Rectangle (0, 0, 32, 32);
 
             emMovimento = false;
+
         }
 
         public Vector2 getPosicao ()
@@ -46,6 +47,7 @@ namespace HideSeek
         {
             posicao = posicaoInicial;
             posicaoAlvo = posicao;
+
         }
 
         public void LoadContent (ContentManager theContentManager)
@@ -96,91 +98,37 @@ namespace HideSeek
                 {
                     dir = 3;
                     proxPosicao.Y += 32.0f;
-                    thisBox = Constantes.BoundingBox(proxPosicao);
-                               
-                    for (int i = 0; i < Constantes.tamLabirinto; i++)
-                    {
-                        for (int j = 0; j < Constantes.tamLabirinto; j++)
-                        {
-                            Bloco bloco = mapa.GetBloco(i, j);
-                            Rectangle blocoBox = Constantes.BoundingBox(bloco.getPosicao());
-                        
-                            if (bloco.Parede() && blocoBox.Intersects(thisBox))
-                            {
-                                proxPosicao.Y = blocoBox.Y - thisBox.Height;
-                            }
-                        }
-                    }
-                }
-
-                if (currentState.IsKeyDown(Keys.Up))
+                } else if (currentState.IsKeyDown(Keys.Up))
                 {
                     dir = 1;
                     proxPosicao.Y -= 32.0f;
-                    thisBox = Constantes.BoundingBox(proxPosicao);
-
-                    for (int i = 0; i < Constantes.tamLabirinto; i++)
-                    {
-                        for (int j = 0; j < Constantes.tamLabirinto; j++)
-                        {
-                            Bloco bloco = mapa.GetBloco(i, j);
-                            Rectangle blocoBox = Constantes.BoundingBox(bloco.getPosicao());
-                        
-                            if (bloco.Parede() && blocoBox.Intersects(thisBox))
-                            {
-                                proxPosicao.Y = blocoBox.Y + blocoBox.Height;
-                            }
-                        }
-                    }
-                } 
-
-                if (currentState.IsKeyDown(Keys.Left))
+                } else if (currentState.IsKeyDown(Keys.Left))
                 {
                     dir = 2;
                     proxPosicao.X -= 32.0f;
-                    thisBox = Constantes.BoundingBox(proxPosicao);
-
-                    for (int i = 0; i < Constantes.tamLabirinto; i++)
-                    {
-                        for (int j = 0; j < Constantes.tamLabirinto; j++)
-                        {
-                            Bloco bloco = mapa.GetBloco(i, j);
-                            Rectangle blocoBox = Constantes.BoundingBox(bloco.getPosicao());
-                        
-                            if (bloco.Parede() && blocoBox.Intersects(thisBox))
-                            {
-                                proxPosicao.X = blocoBox.X + blocoBox.Width;
-                            }
-                        
-                        }
-                    
-                    }
-                } 
-
-                if (currentState.IsKeyDown(Keys.Right))
+                } else if (currentState.IsKeyDown(Keys.Right))
                 {
                     dir = 0;
                     proxPosicao.X += 32.0f;
-                    thisBox = Constantes.BoundingBox(proxPosicao);
+                }
+                thisBox = new Rectangle((int)proxPosicao.X, (int)proxPosicao.Y, 32, 32);
 
-                    for (int i = 0; i < Constantes.tamLabirinto; i++)
+                // Verifica colisoes
+                bool colidiu = false;
+                for (int i = 0; i < Constantes.tamLabirinto; i++)
+                {
+                    for (int j = 0; j < Constantes.tamLabirinto; j++)
                     {
-                        for (int j = 0; j < Constantes.tamLabirinto; j++)
-                        {
-                            Bloco bloco = mapa.GetBloco(i, j);
-                            Rectangle blocoBox = Constantes.BoundingBox(bloco.getPosicao());
-                        
-                            if (bloco.Parede() && blocoBox.Intersects(thisBox))
-                            {
-                                proxPosicao.X = blocoBox.X - thisBox.Width;
-                            }
-                        }
-                    }
+                        Bloco bloco = mapa.GetBloco(i, j);
+                        Rectangle blocoBox = Constantes.BoundingBox(bloco.getPosicao());
 
+                        colidiu = colidiu || (bloco.Parede() && blocoBox.Intersects(thisBox));
+                    }
                 }
 
-                // Ao final, atualiza a posiçao alvo.
-                posicaoAlvo = proxPosicao;
+                // Ao final, se nao houver colisoes, atualiza a posiçao alvo.
+                if (!colidiu)
+                    posicaoAlvo = proxPosicao;
             }
         }
     }   

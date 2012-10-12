@@ -1,6 +1,7 @@
 ﻿<Properties GitUserInfo="UsingMD">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" ActiveRuntime="MS.NET" />
 <<<<<<< HEAD
+<<<<<<< HEAD
   <MonoDevelop.Ide.Workbench ActiveDocument="Mapa.cs">
     <Files>
       <File FileName="Constantes.cs" Line="35" Column="56" />
@@ -8,16 +9,30 @@
       <File FileName="Bloco.cs" Line="9" Column="20" />
       <File FileName="HideSeek.cs" Line="116" Column="70" />
 =======
+=======
+>>>>>>> Refatorado algoritmo de colisão
   <MonoDevelop.Ide.Workbench ActiveDocument="Personagem.cs">
     <Files>
       <File FileName="Personagem.cs" Line="177" Column="26" />
       <File FileName="c:\Users\ThiagoJedi\Documents\GitHub\XnaGameDevDimap2012\HideSeekWindows\HideSeek.cs" Line="79" Column="55" />
       <File FileName="Constantes.cs" Line="59" Column="49" />
+<<<<<<< HEAD
 >>>>>>> Animação do Personagem e Movimentação Atualizada
+=======
+=======
+  <MonoDevelop.Ide.Workbench ActiveDocument="Mapa.cs">
+    <Files>
+      <File FileName="Constantes.cs" Line="35" Column="56" />
+      <File FileName="Mapa.cs" Line="59" Column="6" />
+      <File FileName="Bloco.cs" Line="9" Column="20" />
+      <File FileName="HideSeek.cs" Line="116" Column="70" />
+>>>>>>> 128ff81d787e86b7e65c406e09b705de72c3f1d7
+>>>>>>> Refatorado algoritmo de colisão
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
+<<<<<<< HEAD
 <<<<<<< HEAD
           <Node name="HideSeekWindows" expanded="True" selected="True">
             <Node name="References" expanded="True" />
@@ -25,6 +40,14 @@
           <Node name="HideSeekWindows" expanded="True">
             <Node name="Personagem.cs" selected="True" />
 >>>>>>> Animação do Personagem e Movimentação Atualizada
+=======
+          <Node name="HideSeekWindows" expanded="True">
+            <Node name="Personagem.cs" selected="True" />
+=======
+          <Node name="HideSeekWindows" expanded="True" selected="True">
+            <Node name="References" expanded="True" />
+>>>>>>> 128ff81d787e86b7e65c406e09b705de72c3f1d7
+>>>>>>> Refatorado algoritmo de colisão
           </Node>
         </State>
       </Pad>
