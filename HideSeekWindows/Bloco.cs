@@ -6,49 +6,50 @@ using Microsoft.Xna.Framework.Input;
 
 namespace HideSeek
 {
-	public class Bloco
-	{
+    public class Bloco
+    {
 
-		private Vector2 posicao;
-		private Texture2D sprite;
-		private bool parede;
+        private Vector2 posicao;
+        private Texture2D sprite;
+        private bool parede;
 
-		public Bloco ()
-		{
-		}
+        public Bloco ()
+        {
+        }
 
-		public Vector2 getPosicao ()
-		{
-			return posicao;
-		}
+        public Vector2 getPosicao ()
+        {
+            return posicao;
+        }
 
-		public Texture2D getSprite()
-		{
-			return sprite;
-		}
+        public Texture2D getSprite ()
+        {
+            return sprite;
+        }
 
-		public void Initialize (bool parede_, Vector2 posicaoInicial)
-		{
-			parede = parede_;
-			posicao = posicaoInicial;
-		}
+        public void Initialize (bool parede_, Vector2 posicaoInicial)
+        {
+            parede = parede_;
+            posicao = posicaoInicial;
+        }
 
-		public void LoadContent (ContentManager theContentManager, String arquivo)
-		{
-			sprite = theContentManager.Load<Texture2D>(arquivo);
-		}
+        public void LoadContent (ContentManager theContentManager, String arquivo)
+        {
+            sprite = theContentManager.Load<Texture2D> (arquivo);
+        }
 
-		public void Draw(SpriteBatch theSpriteBatch) {
-			//theSpriteBatch.Draw(sprite, posicao, Color.White);
-			theSpriteBatch.Draw(sprite, posicao, Color.White);
-		}
+        public void Draw (SpriteBatch theSpriteBatch)
+        {
+            //theSpriteBatch.Draw(sprite, posicao, Color.White);
+            theSpriteBatch.Draw (sprite, posicao, Color.White);
+        }
 
-		//Retorna true se o bloco for uma parede, false caso contrario.
-		public bool Parede ()
-		{
-			return parede;
-		}
-	}
+        //Retorna true se o bloco for uma parede, false caso contrario.
+        public bool Parede ()
+        {
+            return parede;
+        }
+    }
 }
 
 

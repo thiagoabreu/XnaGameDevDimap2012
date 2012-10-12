@@ -1,6 +1,22 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|Mixed Platforms" ActiveRuntime="MS.NET" />
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="ParallaxingBackground.cs">
+    <Files>
+      <File FileName="Player.cs" Line="1" Column="1" />
+      <File FileName="Game1.cs" Line="85" Column="47" />
+      <File FileName="ParallaxingBackground.cs" Line="44" Column="3" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="ShooterWindows" expanded="True">
+            <Node name="References" expanded="True" />
+            <Node name="ParallaxingBackground.cs" selected="True" />
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

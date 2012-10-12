@@ -1,21 +1,22 @@
 ﻿<Properties GitUserInfo="UsingMD">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" ActiveRuntime="MS.NET" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="HideSeek.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Mapa.cs">
     <Files>
-      <File FileName="Personagem.cs" Line="39" Column="73" />
-      <File FileName="Constantes.cs" Line="15" Column="42" />
-      <File FileName="Mapa.cs" Line="60" Column="1" />
-      <File FileName="Bloco.cs" Line="14" Column="23" />
-      <File FileName="HideSeek.cs" Line="46" Column="25" />
+      <File FileName="Constantes.cs" Line="35" Column="56" />
+      <File FileName="Mapa.cs" Line="59" Column="6" />
+      <File FileName="Bloco.cs" Line="9" Column="20" />
+      <File FileName="HideSeek.cs" Line="116" Column="70" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
-          <Node name="HideSeekWindows" expanded="True">
-            <Node name="Content" expanded="True" />
-            <Node name="HideSeek.cs" selected="True" />
+          <Node name="HideSeekWindows" expanded="True" selected="True">
+            <Node name="References" expanded="True" />
           </Node>
         </State>
+      </Pad>
+      <Pad Id="ClassPad">
+        <State expanded="True" selected="True" />
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
