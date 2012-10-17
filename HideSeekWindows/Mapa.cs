@@ -15,14 +15,15 @@ namespace HideSeek
 
         public Mapa (Vector2 posicao_)
         {
-            blocos = new Bloco[15][];
-            for (int i = 0; i < 15; i++)
+			int tam = Constantes.tamLabirinto;
+            blocos = new Bloco[tam][];
+            for (int i = 0; i < tam; i++)
             {
-                blocos [i] = new Bloco[15];
+                blocos [i] = new Bloco[tam];
             }
-            for (int i = 0; i < 15; i++)
+            for (int i = 0; i < tam; i++)
             {
-                for (int j = 0; j < 15; j++)
+                for (int j = 0; j < tam; j++)
                 {
                     blocos [i] [j] = new Bloco ();
                 }
@@ -31,8 +32,11 @@ namespace HideSeek
             posicao.Y = posicao_.Y;
         }
 
-        public void Initialize (String descricao)
+        public void Initialize (String descricao = "")
         {
+			if (descricao == "") 
+				descricao = this.GenerateMap();
+
             if (descricao.Length == Constantes.tamLabirinto * Constantes.tamLabirinto)
             {
                 for (int i = 0; i < Constantes.tamLabirinto; i++)
@@ -170,6 +174,33 @@ namespace HideSeek
         {
             return blocos [i] [j];
         }
+
+		public String GenerateMap() {
+			System.Text.StringBuilder builderMap = new System.Text.StringBuilder();
+			int tamanho = Constantes.tamLabirinto;
+			Random rand = new Random();
+
+			for (int i = 0; i < tamanho; i++)
+				builderMap.Append("P");
+
+			for (int i = 0; i < tamanho-2; i++) {
+				builderMap.Append("PC");
+				for (int j = 0; j < tamanho-4; j++)
+					if (i == 0 || i == tamanho-3)
+						builderMap.Append("C");
+					else
+						if (rand.Next() % 3 != 0)
+							builderMap.Append("C");
+						else
+						builderMap.Append("P");
+				builderMap.Append("CP");
+			}
+
+			for (int i = 0; i < tamanho; i++)
+				builderMap.Append("P");
+
+			return builderMap.ToString();
+		}
     }
 }
 

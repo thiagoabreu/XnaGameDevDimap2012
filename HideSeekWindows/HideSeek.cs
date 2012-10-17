@@ -23,6 +23,7 @@ namespace HideSeek
             : base()
         {
             graphics = new GraphicsDeviceManager (this);
+			graphics.IsFullScreen = true;
             Content.RootDirectory = "Content";
 
             jogador = new Personagem ();
@@ -40,7 +41,7 @@ namespace HideSeek
         protected override void Initialize ()
         {
             jogador.Initialize (new Vector2 (32f, 32f));
-            mapa.Initialize (Constantes.mapa2);
+            mapa.Initialize ();
             base.Initialize ();
         }
 
