@@ -23,7 +23,7 @@ namespace HideSeek
         {
             tempoDecorrido = 0;
             frameAtual = 0;
-            frameRate = 100;
+            frameRate = 200;
 
             dir = 0;
 
@@ -74,14 +74,17 @@ namespace HideSeek
             #endregion    
 
             #region Animaçao do Sprite
-            tempoDecorrido += (int)theGameTime.ElapsedGameTime.TotalMilliseconds;
-            if (tempoDecorrido > frameRate)
-            {
-                frameAtual = frameAtual < frameCount ? frameAtual + 1 : 0;
-                tempoDecorrido = 0;
-            }
-            animationRec.Y = 32 * frameAtual;
-            animationRec.X = 32 * dir;
+	            tempoDecorrido += (int)theGameTime.ElapsedGameTime.TotalMilliseconds;
+			if (emMovimento)
+			{
+	            if (tempoDecorrido > frameRate)
+	            {
+	                frameAtual = frameAtual < frameCount ? frameAtual + 1 : 0;
+	                tempoDecorrido = 0;
+	            }
+	            animationRec.Y = 32 * frameAtual;
+	            animationRec.X = 32 * dir;
+			}
             #endregion
 
             theSpriteBatch.Draw(sprite, posicao, animationRec, Color.White);
@@ -89,12 +92,12 @@ namespace HideSeek
 
         public void Update (KeyboardState currentState, Mapa mapa)
         {
-            if (!emMovimento)
+            if (!emMovimento && currentState.GetPressedKeys().Length > 0)
             {
                 Vector2 proxPosicao = new Vector2 (this.getPosicao().X, this.getPosicao().Y);
                 Rectangle thisBox;
 
-                if (currentState.IsKeyDown(Keys.Down))
+    			if (currentState.IsKeyDown(Keys.Down))
                 {
                     dir = 3;
                     proxPosicao.Y += 32.0f;
@@ -114,17 +117,11 @@ namespace HideSeek
                 thisBox = new Rectangle((int)proxPosicao.X, (int)proxPosicao.Y, 32, 32);
 
                 // Verifica colisoes
-                bool colidiu = false;
-                for (int i = 0; i < Constantes.tamLabirinto; i++)
-                {
-                    for (int j = 0; j < Constantes.tamLabirinto; j++)
-                    {
-                        Bloco bloco = mapa.GetBloco(i, j);
-                        Rectangle blocoBox = Constantes.BoundingBox(bloco.getPosicao());
-
-                        colidiu = colidiu || (bloco.Parede() && blocoBox.Intersects(thisBox));
-                    }
-                }
+                
+				Bloco bloco = mapa.GetBloco(((int)proxPosicao.X / 32), ((int)proxPosicao.Y / 32));
+                Rectangle blocoBox = Constantes.BoundingBox(bloco.getPosicao());
+				bool colidiu = (bloco.Parede() && blocoBox.Intersects(thisBox));
+                
 
                 // Ao final, se nao houver colisoes, atualiza a posiçao alvo.
                 if (!colidiu)
