@@ -23,8 +23,11 @@ namespace HideSeek
             : base()
         {
             graphics = new GraphicsDeviceManager (this);
-			graphics.IsFullScreen = true;
+            graphics.IsFullScreen = true;
             Content.RootDirectory = "Content";
+
+            this.IsFixedTimeStep = true;
+            this.TargetElapsedTime = TimeSpan.FromSeconds (0.033);
 
             jogador = new Personagem ();
             //  bloco = new Bloco();
