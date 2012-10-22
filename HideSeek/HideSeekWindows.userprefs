@@ -1,0 +1,24 @@
+﻿<Properties GitUserInfo="UsingMD">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" ActiveRuntime="MS.NET" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Constantes.cs">
+    <Files>
+      <File FileName="Personagem.cs" Line="123" Column="63" />
+      <File FileName="c:\Users\ThiagoJedi\Documents\GitHub\XnaGameDevDimap2012\HideSeekWindows\HideSeek.cs" Line="114" Column="10" />
+      <File FileName="Constantes.cs" Line="9" Column="51" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="HideSeekWindows" expanded="True" selected="True" />
+        </State>
+      </Pad>
+      <Pad Id="ClassPad">
+        <State expanded="True" selected="True" />
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
