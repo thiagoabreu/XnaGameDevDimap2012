@@ -19,6 +19,7 @@ namespace HideSeek
         Personagem jogador;
         Mapa mapa;
         KeyboardState currentState;
+        SpriteFont fonte;
 
         PacketWriter caixaSaida = new PacketWriter();
         PacketReader caixaEntrada = new PacketReader();
@@ -55,6 +56,8 @@ namespace HideSeek
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch (GraphicsDevice);
+
+            fonte = Content.Load<SpriteFont>("Font");
         }
 
         /// <summary>
@@ -95,7 +98,8 @@ namespace HideSeek
             try {
                 rede = NetworkSession.Create(NetworkSessionType.SystemLink, 2, 2);
                 mapa = new Mapa(new Vector2(0f,0f));
-                mapa.GenerateMap();
+                mapa.Initialize();
+                mapa.LoadContent(Content);
                 Console.WriteLine("criou");
             } catch (Exception ex) {
                 // Faca nada
@@ -110,7 +114,9 @@ namespace HideSeek
                 using (AvailableNetworkSessionCollection disponiveis = NetworkSession.Find(NetworkSessionType.SystemLink, 2,null)) {
                     if (disponiveis.Count != 0) {
                         rede = NetworkSession.Join (disponiveis [0]);
-                        mapa = (rede.AllGamers[0].Tag as Personagem).Mapa;
+                        mapa = new Mapa(new Vector2(0f,0f));
+                        mapa.Initialize();
+                        mapa.LoadContent(Content);
                         ManipulaEventos ();
                     } else {
                         return;
@@ -124,7 +130,12 @@ namespace HideSeek
         protected void ManipulaEventos ()
         {
             rede.GamerJoined += delegate(object sender, GamerJoinedEventArgs e) {
-                e.Gamer.Tag = new Personagem(mapa);
+                Personagem player = new Personagem();
+                player.Initialize(new Vector2(32f,32f));
+                player.LoadContent(Content);
+                if (mapa != null)
+                    player.Mapa = mapa;
+                e.Gamer.Tag = player;
             };
 
             rede.SessionEnded += delegate(object sender, NetworkSessionEndedEventArgs e) {
@@ -141,11 +152,13 @@ namespace HideSeek
                 Personagem player = gamer.Tag as Personagem;
                 player.Update (Keyboard.GetState (gamer.SignedInGamer.PlayerIndex));
 
-                caixaSaida.Write(player.PosicaoAlvo);
-                gamer.SendData(caixaSaida, SendDataOptions.InOrder);
+                caixaSaida.Write (player.Mapa.Descricao);
+                caixaSaida.Write (player.Posicao);
+                caixaSaida.Write (player.PosicaoAlvo);
+                gamer.SendData (caixaSaida, SendDataOptions.InOrder);
             }
 
-            rede.Update();
+            rede.Update ();
 
             if (rede == null)
                 return;
@@ -154,18 +167,23 @@ namespace HideSeek
                 while (gamer.IsDataAvailable) {
                     NetworkGamer remetente;
 
-                    gamer.ReceiveData(caixaEntrada, out remetente);
+                    gamer.ReceiveData (caixaEntrada, out remetente);
 
                     if (remetente.IsLocal)
                         continue; // Nao quero local
 
                     Personagem player = remetente.Tag as Personagem;
 
-                    player.PosicaoAlvo = caixaEntrada.ReadVector2();
+                        mapa = new Mapa (new Vector2 (0f, 0f));
+                        mapa.Initialize (caixaEntrada.ReadString ());
+                        mapa.LoadContent (Content);
+                        player.Mapa = mapa;
+                    player.Posicao = caixaEntrada.ReadVector2();
+                    player.PosicaoAlvo = caixaEntrada.ReadVector2 ();
                 }
             }
 
-            if (Apertou(Keys.Escape))
+            if (Apertou (Keys.Escape))
                 this.Exit ();
         }
 
@@ -176,10 +194,30 @@ namespace HideSeek
         protected override void Draw (GameTime gameTime)
         {
             GraphicsDevice.Clear (Color.Black);
-//            spriteBatch.Begin();
-//            mapa.Draw(spriteBatch);
-//            jogador.Draw(spriteBatch, gameTime);
-//            spriteBatch.End();
+
+            if (rede == null) {
+
+                string mensagem = "N para nova sessao\nJ para juntar uma existente";
+
+                spriteBatch.Begin ();
+                spriteBatch.DrawString (fonte, mensagem, new Vector2 (160f, 160f), Color.White);
+                spriteBatch.DrawString (fonte, mensagem, new Vector2 (161f, 161f), Color.Gray);
+                spriteBatch.End ();
+            } else {
+                spriteBatch.Begin ();
+                if (mapa != null)
+                    mapa.Draw (spriteBatch);
+
+                foreach (NetworkGamer gamer in rede.AllGamers) {
+                    Personagem player = gamer.Tag as Personagem;
+
+                    player.Draw (spriteBatch, gameTime);
+                }
+
+                spriteBatch.End ();
+            }
+
+
             base.Draw (gameTime);
         }
 

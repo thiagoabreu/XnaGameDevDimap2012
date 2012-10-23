@@ -11,7 +11,16 @@ namespace HideSeek
 
         private Bloco[][] blocos;
         private Vector2 posicao; //posicao do bloco superior esquerdo.
+        private String descricao;
 
+        public String Descricao {
+            get {
+                return this.descricao;
+            }
+            set {
+                this.descricao = value;
+            }
+        }
 
         public Mapa (Vector2 posicao_)
         {
@@ -32,8 +41,9 @@ namespace HideSeek
             posicao.Y = posicao_.Y;
         }
 
-        public void Initialize (String descricao = "")
+        public void Initialize (String aDescricao = "")
         {
+            descricao = aDescricao;
 			if (descricao == "") 
 				descricao = this.GenerateMap();
 

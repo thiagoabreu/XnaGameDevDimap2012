@@ -8,21 +8,24 @@ namespace HideSeek
 {
     public class Personagem
     {
-        public Vector2 posicao;
-        private Vector2 posicaoAlvo;
-        private bool emMovimento;
-        private Texture2D sprite;
-        private Rectangle animationRec;
-        private Mapa mapa;
-        private int dir;
-        private int frameRate;
-        private int tempoDecorrido;
-        private int frameCount;
-        private int frameAtual;
+        Vector2 posicaoAlvo;
+        Vector2 posicao;
+        bool emMovimento;
+        Texture2D sprite;
+        Rectangle animationRec;
+        Mapa mapa;
+        int dir;
+        int frameRate;
+        int tempoDecorrido;
+        int frameCount;
+        int frameAtual;
 
         public Mapa Mapa {
             get {
                 return this.mapa;
+            }
+            set {
+                this.mapa = value;
             }
         }
 
@@ -35,12 +38,19 @@ namespace HideSeek
             }
         }
 
+        public Vector2 Posicao {
+            get {
+                return this.posicao;
+            }
+            set {
+                this.posicao = value;
+            }
+        }
 
 
-        public Personagem (Mapa map)
+
+        public Personagem ()
         {
-            mapa = map;
-
             tempoDecorrido = 0;
             frameAtual = 0;
             frameRate = 200;
@@ -127,7 +137,7 @@ namespace HideSeek
             } else {
                 #region Movimentacao do Sprite
                 // Desliza o sprite em direçao a posicao alvo
-                if (posicaoAlvo.X > posicao.X)
+                if (posicaoAlvo.X > posicao.X) {
                     posicao.X += Constantes.velocidadeSeeker;
                 if (posicaoAlvo.X < posicao.X)
                     posicao.X -= Constantes.velocidadeSeeker;
