@@ -5,8 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Storage;
-using Microsoft.Xna.Framework.GamerServices;
+using Microsoft.Xna.Framework.Net;
 
 #endregion
 
@@ -16,23 +15,25 @@ namespace HideSeek
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        NetworkSession rede;
         Personagem jogador;
         Mapa mapa;
+        KeyboardState currentState;
+
+        PacketWriter caixaSaida = new PacketWriter();
+        PacketReader caixaEntrada = new PacketReader();
         
         public HideSeek ()
             : base()
         {
             graphics = new GraphicsDeviceManager (this);
-            graphics.IsFullScreen = true;
+            graphics.IsFullScreen = false;
             Content.RootDirectory = "Content";
 
             this.IsFixedTimeStep = true;
             this.TargetElapsedTime = TimeSpan.FromSeconds (0.033);
 
-            jogador = new Personagem ();
-            //  bloco = new Bloco();
-
-            mapa = new Mapa (new Vector2 (0f, 0f));
+            new Bloco();
         }
 
         /// <summary>
@@ -43,8 +44,6 @@ namespace HideSeek
         /// </summary>
         protected override void Initialize ()
         {
-            jogador.Initialize (new Vector2 (32f, 32f));
-            mapa.Initialize ();
             base.Initialize ();
         }
 
@@ -56,10 +55,7 @@ namespace HideSeek
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch (GraphicsDevice);
-                        
-            jogador.LoadContent (Content);
-            mapa.LoadContent (Content);
-                    }
+        }
 
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload
@@ -77,15 +73,100 @@ namespace HideSeek
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update (GameTime gameTime)
         {
-
-            KeyboardState currentState = Keyboard.GetState();
-
-            jogador.Update(Keyboard.GetState(), mapa);
-
-            if (currentState.IsKeyDown(Keys.Escape))
-                this.Exit();
+            if (rede == null)
+                UpdateMenu();
+            else 
+                UpdateSessao();
                 
             base.Update(gameTime);
+        }
+
+        protected void UpdateMenu ()
+        {
+            currentState = Keyboard.GetState();
+            if (currentState.IsKeyDown (Keys.N))
+                    CriaSessao ();
+                else if (currentState.IsKeyDown (Keys.J))
+                    JoinSessao ();
+        }
+
+        protected void CriaSessao ()
+        {
+            try {
+                rede = NetworkSession.Create(NetworkSessionType.SystemLink, 2, 2);
+                mapa = new Mapa(new Vector2(0f,0f));
+                mapa.GenerateMap();
+                Console.WriteLine("criou");
+            } catch (Exception ex) {
+                // Faca nada
+            }
+
+            ManipulaEventos();
+        }
+
+        protected void JoinSessao ()
+        {
+            try {
+                using (AvailableNetworkSessionCollection disponiveis = NetworkSession.Find(NetworkSessionType.SystemLink, 2,null)) {
+                    if (disponiveis.Count != 0) {
+                        rede = NetworkSession.Join (disponiveis [0]);
+                        mapa = (rede.AllGamers[0].Tag as Personagem).Mapa;
+                        ManipulaEventos ();
+                    } else {
+                        return;
+                    }
+                }
+            } catch (Exception ex) {
+                // Faca nada
+            }
+        }
+
+        protected void ManipulaEventos ()
+        {
+            rede.GamerJoined += delegate(object sender, GamerJoinedEventArgs e) {
+                e.Gamer.Tag = new Personagem(mapa);
+            };
+
+            rede.SessionEnded += delegate(object sender, NetworkSessionEndedEventArgs e) {
+                rede.Dispose();
+                rede = null;
+            };
+        }
+
+        void UpdateSessao ()
+        {
+            currentState = Keyboard.GetState ();
+
+            foreach (var gamer in rede.LocalGamers) {
+                Personagem player = gamer.Tag as Personagem;
+                player.Update (Keyboard.GetState (gamer.SignedInGamer.PlayerIndex));
+
+                caixaSaida.Write(player.PosicaoAlvo);
+                gamer.SendData(caixaSaida, SendDataOptions.InOrder);
+            }
+
+            rede.Update();
+
+            if (rede == null)
+                return;
+
+            foreach (LocalNetworkGamer gamer in rede.LocalGamers) {
+                while (gamer.IsDataAvailable) {
+                    NetworkGamer remetente;
+
+                    gamer.ReceiveData(caixaEntrada, out remetente);
+
+                    if (remetente.IsLocal)
+                        continue; // Nao quero local
+
+                    Personagem player = remetente.Tag as Personagem;
+
+                    player.PosicaoAlvo = caixaEntrada.ReadVector2();
+                }
+            }
+
+            if (Apertou(Keys.Escape))
+                this.Exit ();
         }
 
         /// <summary>
@@ -95,11 +176,16 @@ namespace HideSeek
         protected override void Draw (GameTime gameTime)
         {
             GraphicsDevice.Clear (Color.Black);
-            spriteBatch.Begin();
-            mapa.Draw(spriteBatch);
-            jogador.Draw(spriteBatch, gameTime);
-            spriteBatch.End();
+//            spriteBatch.Begin();
+//            mapa.Draw(spriteBatch);
+//            jogador.Draw(spriteBatch, gameTime);
+//            spriteBatch.End();
             base.Draw (gameTime);
+        }
+
+        bool Apertou (Keys key)
+        {
+            return currentState.IsKeyDown(key);
         }
     }
 

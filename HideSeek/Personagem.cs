@@ -8,19 +8,39 @@ namespace HideSeek
 {
     public class Personagem
     {
-        private Vector2 posicao;
+        public Vector2 posicao;
         private Vector2 posicaoAlvo;
         private bool emMovimento;
         private Texture2D sprite;
         private Rectangle animationRec;
+        private Mapa mapa;
         private int dir;
         private int frameRate;
         private int tempoDecorrido;
         private int frameCount;
         private int frameAtual;
 
-        public Personagem ()
+        public Mapa Mapa {
+            get {
+                return this.mapa;
+            }
+        }
+
+        public Vector2 PosicaoAlvo {
+            get {
+                return this.posicaoAlvo;
+            }
+            set {
+                posicaoAlvo = value;
+            }
+        }
+
+
+
+        public Personagem (Mapa map)
         {
+            mapa = map;
+
             tempoDecorrido = 0;
             frameAtual = 0;
             frameRate = 200;
@@ -58,74 +78,67 @@ namespace HideSeek
 
         public void Draw (SpriteBatch theSpriteBatch, GameTime theGameTime)
         {
-            #region Movimentacao do Sprite
-            // Desliza o sprite em direçao a posicao alvo
-            if (posicaoAlvo.X > posicao.X)
-                posicao.X += Constantes.velocidadeSeeker;
-            if (posicaoAlvo.X < posicao.X)
-                posicao.X -= Constantes.velocidadeSeeker;
-            if (posicaoAlvo.Y > posicao.Y)
-                posicao.Y += Constantes.velocidadeSeeker;
-            if (posicaoAlvo.Y < posicao.Y)
-                posicao.Y -= Constantes.velocidadeSeeker;
-
-            // Verifica se chegou na posiçao.
-            emMovimento = (posicao.Y != posicaoAlvo.Y || posicao.X != posicaoAlvo.X);
-            #endregion    
-
             #region Animaçao do Sprite
-	            tempoDecorrido += (int)theGameTime.ElapsedGameTime.TotalMilliseconds;
-			if (emMovimento)
-			{
-	            if (tempoDecorrido > frameRate)
-	            {
-	                frameAtual = frameAtual < frameCount ? frameAtual + 1 : 0;
-	                tempoDecorrido = 0;
-	            }
-	            animationRec.Y = 32 * frameAtual;
-	            animationRec.X = 32 * dir;
-			}
+            tempoDecorrido += (int)theGameTime.ElapsedGameTime.TotalMilliseconds;
+            if (emMovimento) {
+                if (tempoDecorrido > frameRate) {
+                    frameAtual = frameAtual < frameCount ? frameAtual + 1 : 0;
+                    tempoDecorrido = 0;
+                }
+                animationRec.Y = 32 * frameAtual;
+                animationRec.X = 32 * dir;
+            }
             #endregion
 
-            theSpriteBatch.Draw(sprite, posicao, animationRec, Color.White);
+            theSpriteBatch.Draw (sprite, posicao, animationRec, Color.White);
         }
 
-        public void Update (KeyboardState currentState, Mapa mapa)
+        public void Update (KeyboardState currentState)
         {
-            if (!emMovimento && currentState.GetPressedKeys().Length > 0)
-            {
-                Vector2 proxPosicao = new Vector2 (this.getPosicao().X, this.getPosicao().Y);
+            if (!emMovimento && currentState.GetPressedKeys ().Length > 0) {
+                Vector2 proxPosicao = new Vector2 (this.getPosicao ().X, this.getPosicao ().Y);
                 Rectangle thisBox;
 
-    			if (currentState.IsKeyDown(Keys.Down))
-                {
+                if (currentState.IsKeyDown (Keys.Down)) {
                     dir = 3;
                     proxPosicao.Y += 32.0f;
-                } else if (currentState.IsKeyDown(Keys.Up))
-                {
+                } else if (currentState.IsKeyDown (Keys.Up)) {
                     dir = 1;
                     proxPosicao.Y -= 32.0f;
-                } else if (currentState.IsKeyDown(Keys.Left))
-                {
+                } else if (currentState.IsKeyDown (Keys.Left)) {
                     dir = 2;
                     proxPosicao.X -= 32.0f;
-                } else if (currentState.IsKeyDown(Keys.Right))
-                {
+                } else if (currentState.IsKeyDown (Keys.Right)) {
                     dir = 0;
                     proxPosicao.X += 32.0f;
                 }
-                thisBox = new Rectangle((int)proxPosicao.X, (int)proxPosicao.Y, 32, 32);
+                thisBox = new Rectangle ((int)proxPosicao.X, (int)proxPosicao.Y, 32, 32);
 
                 // Verifica colisoes
                 
-				Bloco bloco = mapa.GetBloco(((int)proxPosicao.X / 32), ((int)proxPosicao.Y / 32));
-                Rectangle blocoBox = Constantes.BoundingBox(bloco.getPosicao());
-				bool colidiu = (bloco.Parede() && blocoBox.Intersects(thisBox));
+                Bloco bloco = mapa.GetBloco (((int)proxPosicao.X / 32), ((int)proxPosicao.Y / 32));
+                Rectangle blocoBox = Constantes.BoundingBox (bloco.getPosicao ());
+                bool colidiu = (bloco.Parede () && blocoBox.Intersects (thisBox));
                 
 
                 // Ao final, se nao houver colisoes, atualiza a posiçao alvo.
                 if (!colidiu)
                     posicaoAlvo = proxPosicao;
+            } else {
+                #region Movimentacao do Sprite
+                // Desliza o sprite em direçao a posicao alvo
+                if (posicaoAlvo.X > posicao.X)
+                    posicao.X += Constantes.velocidadeSeeker;
+                if (posicaoAlvo.X < posicao.X)
+                    posicao.X -= Constantes.velocidadeSeeker;
+                if (posicaoAlvo.Y > posicao.Y)
+                    posicao.Y += Constantes.velocidadeSeeker;
+                if (posicaoAlvo.Y < posicao.Y)
+                    posicao.Y -= Constantes.velocidadeSeeker;
+
+                // Verifica se chegou na posiçao.
+                emMovimento = (posicao.Y != posicaoAlvo.Y || posicao.X != posicaoAlvo.X);
+                #endregion
             }
         }
     }   
