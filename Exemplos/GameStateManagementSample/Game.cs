@@ -68,10 +68,7 @@ namespace GameStateManagement
         /// </summary>
         protected override void LoadContent()
         {
-            foreach (string asset in preloadAssets)
-            {
-                Content.Load<object>(asset);
-            }
+            Content.Load<Texture2D>("gradient");
         }
 
 

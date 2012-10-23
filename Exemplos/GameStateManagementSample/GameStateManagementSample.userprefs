@@ -1,0 +1,15 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Game.cs">
+    <Files>
+      <File FileName="Game.cs" Line="75" Column="41" />
+      <File FileName="Screens\BackgroundScreen.cs" Line="26" Column="20" />
+      <File FileName="ScreenManager\ScreenManager.cs" Line="119" Column="13" />
+      <File FileName="ScreenManager\GameScreen.cs" Line="26" Column="14" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
