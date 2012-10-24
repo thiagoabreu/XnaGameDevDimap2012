@@ -45,7 +45,7 @@ namespace HideSeek
         {
             descricao = aDescricao;
 			if (descricao == "") 
-				descricao = this.GenerateMap();
+                descricao = Constantes.mapa1;
 
             if (descricao.Length == Constantes.tamLabirinto * Constantes.tamLabirinto)
             {

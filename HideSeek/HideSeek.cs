@@ -132,9 +132,8 @@ namespace HideSeek
             rede.GamerJoined += delegate(object sender, GamerJoinedEventArgs e) {
                 Personagem player = new Personagem();
                 player.Initialize(new Vector2(32f,32f));
+                player.Mapa = mapa;
                 player.LoadContent(Content);
-                if (mapa != null)
-                    player.Mapa = mapa;
                 e.Gamer.Tag = player;
             };
 
@@ -146,14 +145,10 @@ namespace HideSeek
 
         void UpdateSessao ()
         {
-            currentState = Keyboard.GetState ();
 
             foreach (var gamer in rede.LocalGamers) {
                 Personagem player = gamer.Tag as Personagem;
-                player.Update (Keyboard.GetState (gamer.SignedInGamer.PlayerIndex));
-
-                caixaSaida.Write (player.Mapa.Descricao);
-                caixaSaida.Write (player.Posicao);
+                player.Update (Keyboard.GetState ());
                 caixaSaida.Write (player.PosicaoAlvo);
                 gamer.SendData (caixaSaida, SendDataOptions.InOrder);
             }
@@ -173,12 +168,6 @@ namespace HideSeek
                         continue; // Nao quero local
 
                     Personagem player = remetente.Tag as Personagem;
-
-                        mapa = new Mapa (new Vector2 (0f, 0f));
-                        mapa.Initialize (caixaEntrada.ReadString ());
-                        mapa.LoadContent (Content);
-                        player.Mapa = mapa;
-                    player.Posicao = caixaEntrada.ReadVector2();
                     player.PosicaoAlvo = caixaEntrada.ReadVector2 ();
                 }
             }

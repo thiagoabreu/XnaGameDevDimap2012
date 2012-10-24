@@ -1,16 +1,18 @@
 ﻿<Properties GitUserInfo="UsingGIT">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="HideSeek.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Personagem.cs">
     <Files>
-      <File FileName="HideSeek.cs" Line="118" Column="18" />
-      <File FileName="Personagem.cs" Line="29" Column="16" />
-      <File FileName="Mapa.cs" Line="23" Column="14" />
+      <File FileName="HideSeek.cs" Line="166" Column="62" />
+      <File FileName="Personagem.cs" Line="141" Column="62" />
+      <File FileName="Mapa.cs" Line="69" Column="18" />
+      <File FileName="Bloco.cs" Line="38" Column="29" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="HideSeekLinux" expanded="True">
-            <Node name="HideSeek.cs" selected="True" />
+            <Node name="Content" expanded="True" />
+            <Node name="Personagem.cs" selected="True" />
           </Node>
         </State>
       </Pad>

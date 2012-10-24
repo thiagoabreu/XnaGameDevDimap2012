@@ -88,6 +88,29 @@ namespace HideSeek
 
         public void Draw (SpriteBatch theSpriteBatch, GameTime theGameTime)
         {
+            #region Movimentacao do Sprite
+            // Desliza o sprite em direçao a posicao alvo
+            if (posicaoAlvo.X > posicao.X) {
+                dir = 0;
+                posicao.X += Constantes.velocidadeSeeker;
+            }
+            if (posicaoAlvo.X < posicao.X) {
+                dir = 2;
+                posicao.X -= Constantes.velocidadeSeeker;
+            }
+            if (posicaoAlvo.Y > posicao.Y) {
+                dir = 3;
+                posicao.Y += Constantes.velocidadeSeeker;
+            }
+            if (posicaoAlvo.Y < posicao.Y) {
+                dir = 1;
+                posicao.Y -= Constantes.velocidadeSeeker;
+            }
+
+            // Verifica se chegou na posiçao.
+            emMovimento = (posicao.Y != posicaoAlvo.Y || posicao.X != posicaoAlvo.X);
+            #endregion
+
             #region Animaçao do Sprite
             tempoDecorrido += (int)theGameTime.ElapsedGameTime.TotalMilliseconds;
             if (emMovimento) {
@@ -110,16 +133,16 @@ namespace HideSeek
                 Rectangle thisBox;
 
                 if (currentState.IsKeyDown (Keys.Down)) {
-                    dir = 3;
+                    //dir = 3;
                     proxPosicao.Y += 32.0f;
                 } else if (currentState.IsKeyDown (Keys.Up)) {
-                    dir = 1;
+                    //dir = 1;
                     proxPosicao.Y -= 32.0f;
                 } else if (currentState.IsKeyDown (Keys.Left)) {
-                    dir = 2;
+                    //dir = 2;
                     proxPosicao.X -= 32.0f;
                 } else if (currentState.IsKeyDown (Keys.Right)) {
-                    dir = 0;
+                    //dir = 0;
                     proxPosicao.X += 32.0f;
                 }
                 thisBox = new Rectangle ((int)proxPosicao.X, (int)proxPosicao.Y, 32, 32);
@@ -134,21 +157,6 @@ namespace HideSeek
                 // Ao final, se nao houver colisoes, atualiza a posiçao alvo.
                 if (!colidiu)
                     posicaoAlvo = proxPosicao;
-            } else {
-                #region Movimentacao do Sprite
-                // Desliza o sprite em direçao a posicao alvo
-                if (posicaoAlvo.X > posicao.X) {
-                    posicao.X += Constantes.velocidadeSeeker;
-                if (posicaoAlvo.X < posicao.X)
-                    posicao.X -= Constantes.velocidadeSeeker;
-                if (posicaoAlvo.Y > posicao.Y)
-                    posicao.Y += Constantes.velocidadeSeeker;
-                if (posicaoAlvo.Y < posicao.Y)
-                    posicao.Y -= Constantes.velocidadeSeeker;
-
-                // Verifica se chegou na posiçao.
-                emMovimento = (posicao.Y != posicaoAlvo.Y || posicao.X != posicaoAlvo.X);
-                #endregion
             }
         }
     }   
