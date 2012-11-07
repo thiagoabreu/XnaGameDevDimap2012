@@ -11,18 +11,31 @@ using Microsoft.Xna.Framework.Net;
 
 namespace HideSeek
 {
+    public enum EstadoDeJogo
+        {
+            Splash,
+            Menu,
+            Lobby,
+            Loading,
+            Mapa
+        }
+
     public class HideSeek : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         NetworkSession rede;
-        Personagem jogador;
+        //Personagem jogador;
         Mapa mapa;
         KeyboardState currentState;
         SpriteFont fonte;
 
-        PacketWriter caixaSaida = new PacketWriter();
-        PacketReader caixaEntrada = new PacketReader();
+        PacketWriter caixaSaida;
+        PacketReader caixaEntrada;
+
+        EstadoDeJogo estado_atual = EstadoDeJogo.Splash;
+
+        SplashScreen splashScr;
         
         public HideSeek ()
             : base()
@@ -31,10 +44,14 @@ namespace HideSeek
             graphics.IsFullScreen = false;
             Content.RootDirectory = "Content";
 
+            caixaSaida = new PacketWriter();
+            caixaEntrada = new PacketReader();
+
+            splashScr = new SplashScreen();
+
             this.IsFixedTimeStep = true;
             this.TargetElapsedTime = TimeSpan.FromSeconds (0.033);
 
-            new Bloco();
         }
 
         /// <summary>
@@ -46,6 +63,8 @@ namespace HideSeek
         protected override void Initialize ()
         {
             base.Initialize ();
+
+
         }
 
         /// <summary>
@@ -58,6 +77,7 @@ namespace HideSeek
             spriteBatch = new SpriteBatch (GraphicsDevice);
 
             fonte = Content.Load<SpriteFont>("Font");
+            splashScr.LoadContent(Content);
         }
 
         /// <summary>
@@ -76,21 +96,34 @@ namespace HideSeek
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update (GameTime gameTime)
         {
-            if (rede == null)
+            switch (estado_atual) {
+            case EstadoDeJogo.Splash:
+                splashScr.Update(gameTime, ref estado_atual);
+                break;
+            case EstadoDeJogo.Menu:
                 UpdateMenu();
-            else 
+                break;
+            case EstadoDeJogo.Mapa:
                 UpdateSessao();
-                
+                break;
+            default:
+                //Nao deveria chegar aqui, ainda.
+                break;
+            }
+                            
             base.Update(gameTime);
         }
 
         protected void UpdateMenu ()
         {
-            currentState = Keyboard.GetState();
-            if (currentState.IsKeyDown (Keys.N))
-                    CriaSessao ();
-                else if (currentState.IsKeyDown (Keys.J))
-                    JoinSessao ();
+            currentState = Keyboard.GetState ();
+            if (currentState.IsKeyDown (Keys.N)) {
+                CriaSessao ();
+                estado_atual = EstadoDeJogo.Lobby;
+            } else if (currentState.IsKeyDown (Keys.J)) {
+                JoinSessao ();
+                estado_atual = EstadoDeJogo.Lobby;
+            }
         }
 
         protected void CriaSessao ()
@@ -184,15 +217,19 @@ namespace HideSeek
         {
             GraphicsDevice.Clear (Color.Black);
 
-            if (rede == null) {
-
+            switch (estado_atual) {
+            case EstadoDeJogo.Splash:
+                splashScr.Draw(spriteBatch);
+                break;
+            case EstadoDeJogo.Menu:
                 string mensagem = "N para nova sessao\nJ para juntar uma existente";
 
                 spriteBatch.Begin ();
                 spriteBatch.DrawString (fonte, mensagem, new Vector2 (160f, 160f), Color.White);
                 spriteBatch.DrawString (fonte, mensagem, new Vector2 (161f, 161f), Color.Gray);
                 spriteBatch.End ();
-            } else {
+                break;
+            case EstadoDeJogo.Mapa:
                 spriteBatch.Begin ();
                 if (mapa != null)
                     mapa.Draw (spriteBatch);
@@ -204,8 +241,10 @@ namespace HideSeek
                 }
 
                 spriteBatch.End ();
+                break;
+            default:
+                break;
             }
-
 
             base.Draw (gameTime);
         }
