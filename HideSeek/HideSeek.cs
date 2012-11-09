@@ -119,30 +119,29 @@ namespace HideSeek
             currentState = Keyboard.GetState ();
             if (currentState.IsKeyDown (Keys.N)) {
                 CriaSessao ();
-                estado_atual = EstadoDeJogo.Lobby;
             } else if (currentState.IsKeyDown (Keys.J)) {
                 JoinSessao ();
-                estado_atual = EstadoDeJogo.Lobby;
             }
         }
 
         protected void CriaSessao ()
         {
+            estado_atual = EstadoDeJogo.Loading;
             try {
                 rede = NetworkSession.Create(NetworkSessionType.SystemLink, 2, 2);
                 mapa = new Mapa(new Vector2(0f,0f));
                 mapa.Initialize();
                 mapa.LoadContent(Content);
-                Console.WriteLine("criou");
+                estado_atual = EstadoDeJogo.Mapa;
+                ManipulaEventos();
             } catch (Exception ex) {
-                // Faca nada
+                Console.WriteLine("Erro: " + ex.Message);
             }
-
-            ManipulaEventos();
         }
 
         protected void JoinSessao ()
         {
+            estado_atual = EstadoDeJogo.Loading;
             try {
                 using (AvailableNetworkSessionCollection disponiveis = NetworkSession.Find(NetworkSessionType.SystemLink, 2,null)) {
                     if (disponiveis.Count != 0) {
@@ -150,6 +149,7 @@ namespace HideSeek
                         mapa = new Mapa(new Vector2(0f,0f));
                         mapa.Initialize();
                         mapa.LoadContent(Content);
+                        estado_atual = EstadoDeJogo.Mapa;
                         ManipulaEventos ();
                     } else {
                         return;
@@ -182,6 +182,7 @@ namespace HideSeek
             foreach (var gamer in rede.LocalGamers) {
                 Personagem player = gamer.Tag as Personagem;
                 player.Update (Keyboard.GetState ());
+                caixaSaida.Write (player.Posicao);
                 caixaSaida.Write (player.PosicaoAlvo);
                 gamer.SendData (caixaSaida, SendDataOptions.InOrder);
             }
@@ -201,6 +202,7 @@ namespace HideSeek
                         continue; // Nao quero local
 
                     Personagem player = remetente.Tag as Personagem;
+                    player.Posicao = caixaEntrada.ReadVector2 ();
                     player.PosicaoAlvo = caixaEntrada.ReadVector2 ();
                 }
             }

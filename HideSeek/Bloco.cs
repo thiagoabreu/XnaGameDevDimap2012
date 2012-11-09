@@ -40,7 +40,6 @@ namespace HideSeek
 
         public void Draw (SpriteBatch theSpriteBatch)
         {
-            //theSpriteBatch.Draw(sprite, posicao, Color.White);
             theSpriteBatch.Draw (sprite, posicao, Color.White);
         }
 
