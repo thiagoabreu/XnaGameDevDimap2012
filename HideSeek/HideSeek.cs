@@ -245,6 +245,8 @@ namespace HideSeek
                 spriteBatch.End ();
                 break;
             default:
+                estado_atual = EstadoDeJogo.Menu;
+                Console.WriteLine("Houve um erro bizarro com o EstadodeJogo");
                 break;
             }
 
