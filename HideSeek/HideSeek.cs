@@ -50,7 +50,7 @@ namespace HideSeek
             splashScr = new SplashScreen();
 
             this.IsFixedTimeStep = true;
-            this.TargetElapsedTime = TimeSpan.FromSeconds (1.0f);
+            this.TargetElapsedTime = TimeSpan.FromSeconds (0.33f);
 
         }
 
