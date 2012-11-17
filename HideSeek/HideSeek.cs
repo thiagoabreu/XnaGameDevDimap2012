@@ -33,7 +33,7 @@ namespace HideSeek
         PacketWriter caixaSaida;
         PacketReader caixaEntrada;
 
-        EstadoDeJogo estado_atual = EstadoDeJogo.Menu;
+        EstadoDeJogo estado_atual = EstadoDeJogo.Splash;
 
         SplashScreen splashScr;
         
@@ -106,12 +106,6 @@ namespace HideSeek
             case EstadoDeJogo.Mapa:
                 UpdateSessao();
                 break;
-            case EstadoDeJogo.Lobby:
-                CarregaMapa();
-                break;
-            case EstadoDeJogo.Loading:
-                InicializaJogadores();
-                break;
             default:
                 //Nao deveria chegar aqui, ainda.
                 break;
@@ -132,9 +126,13 @@ namespace HideSeek
 
         protected void CriaSessao ()
         {
+            estado_atual = EstadoDeJogo.Loading;
             try {
                 rede = NetworkSession.Create(NetworkSessionType.SystemLink, 2, 2);
-                estado_atual = EstadoDeJogo.Lobby;
+                mapa = new Mapa(new Vector2(0f,0f));
+                mapa.Initialize();
+                mapa.LoadContent(Content);
+                estado_atual = EstadoDeJogo.Mapa;
                 ManipulaEventos();
             } catch (Exception ex) {
                 Console.WriteLine("Erro: " + ex.Message);
@@ -143,11 +141,15 @@ namespace HideSeek
 
         protected void JoinSessao ()
         {
+            estado_atual = EstadoDeJogo.Loading;
             try {
                 using (AvailableNetworkSessionCollection disponiveis = NetworkSession.Find(NetworkSessionType.SystemLink, 2,null)) {
                     if (disponiveis.Count != 0) {
                         rede = NetworkSession.Join (disponiveis [0]);
-                        estado_atual = EstadoDeJogo.Lobby;
+                        mapa = new Mapa(new Vector2(0f,0f));
+                        mapa.Initialize();
+                        mapa.LoadContent(Content);
+                        estado_atual = EstadoDeJogo.Mapa;
                         ManipulaEventos ();
                     } else {
                         return;
@@ -162,6 +164,8 @@ namespace HideSeek
         {
             rede.GamerJoined += delegate(object sender, GamerJoinedEventArgs e) {
                 Personagem player = new Personagem();
+                player.Initialize(new Vector2(32f,32f));
+                player.Mapa = mapa;
                 player.LoadContent(Content);
                 e.Gamer.Tag = player;
             };
@@ -172,71 +176,9 @@ namespace HideSeek
             };
         }
 
-        void CarregaMapa ()
-        {
-            foreach (var gamer in rede.LocalGamers) {
-                if (gamer.IsHost && null == mapa) {
-                    mapa = new Mapa (new Vector2 (0f, 0f));
-                    mapa.Initialize ();
-                }
-                if (null != mapa) {
-                    caixaSaida.Write (mapa.Descricao);
-                    Console.WriteLine ("Enviei mapa");
-                }
-                else
-                    caixaSaida.Write ("");
-                gamer.SendData (caixaSaida, SendDataOptions.Reliable);
-            }
-
-            rede.Update ();
-            if (null == rede)
-                return;
-
-            String descricaoRemota = "";
-            bool ok = true;
-
-            foreach (LocalNetworkGamer gamer in rede.LocalGamers)
-                while (gamer.IsDataAvailable) {
-                    NetworkGamer remetente;
-                    gamer.ReceiveData (caixaEntrada, out remetente);
-                    if (remetente.IsLocal)
-                        continue;
-                    string descricaoAux = caixaEntrada.ReadString ();                 
-                    if (!String.IsNullOrEmpty(descricaoAux))
-                        descricaoRemota = descricaoAux;
-                    ok = ok && !String.IsNullOrEmpty(descricaoAux);
-                }
-
-            if (!String.IsNullOrEmpty(descricaoRemota) && null == mapa) {
-                mapa = new Mapa(new Vector2(0.0f,0.0f));
-                mapa.Initialize(descricaoRemota);
-                mapa.LoadContent(Content);
-            }
-
-            if (ok && rede.RemoteGamers.Count > 0)
-                estado_atual = EstadoDeJogo.Loading;
-        }
-
-        void InicializaJogadores ()
-        {
-            mapa.LoadContent(Content);
-
-            foreach (LocalNetworkGamer gamer in rede.LocalGamers) {
-                Personagem player = gamer.Tag as Personagem;
-                player.Initialize(new Vector2(32.0f,32.0f));
-                player.Mapa = mapa;
-            }
-
-            rede.Update ();
-            if (null == rede)
-                return;
-
-
-            estado_atual = EstadoDeJogo.Mapa;
-        }
-
         void UpdateSessao ()
         {
+
             foreach (var gamer in rede.LocalGamers) {
                 Personagem player = gamer.Tag as Personagem;
                 player.Update (Keyboard.GetState ());
@@ -247,10 +189,10 @@ namespace HideSeek
 
             rede.Update ();
 
-            if (null == rede)
+            if (rede == null)
                 return;
 
-            foreach (var gamer in rede.LocalGamers) {
+            foreach (LocalNetworkGamer gamer in rede.LocalGamers) {
                 while (gamer.IsDataAvailable) {
                     NetworkGamer remetente;
 
@@ -285,8 +227,8 @@ namespace HideSeek
                 string mensagem = "N para nova sessao\nJ para juntar uma existente";
 
                 spriteBatch.Begin ();
-                spriteBatch.DrawString (fonte, mensagem, new Vector2 (160f, 160f), Color.Gray);
-                spriteBatch.DrawString (fonte, mensagem, new Vector2 (161f, 161f), Color.White);
+                spriteBatch.DrawString (fonte, mensagem, new Vector2 (160f, 160f), Color.White);
+                spriteBatch.DrawString (fonte, mensagem, new Vector2 (161f, 161f), Color.Gray);
                 spriteBatch.End ();
                 break;
             case EstadoDeJogo.Mapa:
@@ -302,18 +244,6 @@ namespace HideSeek
 
                 spriteBatch.End ();
                 break;
-            case EstadoDeJogo.Lobby:
-                spriteBatch.Begin();
-                spriteBatch.DrawString(fonte, "Carregando Mapa", new Vector2(100f, 100f), Color.Gray);
-                spriteBatch.DrawString(fonte, "Carregando Mapa", new Vector2(101f, 101f), Color.White);
-                spriteBatch.End();
-                break;
-            case EstadoDeJogo.Loading:
-                spriteBatch.Begin();
-                spriteBatch.DrawString(fonte, "Carregando", new Vector2(100f, 100f), Color.Gray);
-                spriteBatch.DrawString(fonte, "Carregando", new Vector2(101f, 101f), Color.White);
-                spriteBatch.End();
-                break;
             default:
                 estado_atual = EstadoDeJogo.Menu;
                 Console.WriteLine("Houve um erro bizarro com o EstadodeJogo");
@@ -325,7 +255,7 @@ namespace HideSeek
 
         bool Apertou (Keys key)
         {
-            return Keyboard.GetState().IsKeyDown(key);
+            return currentState.IsKeyDown(key);
         }
     }
 
