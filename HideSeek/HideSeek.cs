@@ -33,7 +33,7 @@ namespace HideSeek
         PacketWriter caixaSaida;
         PacketReader caixaEntrada;
 
-        EstadoDeJogo estado_atual = EstadoDeJogo.Menu;
+        EstadoDeJogo estado_atual = EstadoDeJogo.Splash;
 
         SplashScreen splashScr;
         
