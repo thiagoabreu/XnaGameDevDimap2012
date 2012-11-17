@@ -1,0 +1,28 @@
+﻿<Properties GitUserInfo="UsingGIT">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="HideSeek.cs">
+    <Files>
+      <File FileName="HideSeek.cs" Line="133" Column="26" />
+      <File FileName="Personagem.cs" Line="105" Column="28" />
+      <File FileName="Mapa.cs" Line="92" Column="14" />
+      <File FileName="Bloco.cs" Line="36" Column="12" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="HideSeekLinux" expanded="True">
+            <Node name="Content" expanded="True" />
+            <Node name="HideSeek.cs" selected="True" />
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="ClassPad">
+        <State expanded="True" selected="True" />
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
