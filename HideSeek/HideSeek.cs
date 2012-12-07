@@ -12,13 +12,13 @@ using Microsoft.Xna.Framework.Net;
 namespace HideSeek
 {
     public enum EstadoDeJogo
-        {
-            Splash,
-            Menu,
-            Lobby,
-            Loading,
-            Mapa
-        }
+    {
+        Splash,
+        Menu,
+        Lobby,
+        Loading,
+        Mapa
+    }
 
     public class HideSeek : Game
     {
