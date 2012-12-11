@@ -12,11 +12,13 @@ namespace HideSeek
     {
         //Variaveis numericas
         public const float velocidadeSeeker = 4.0f;
-        public const int tamLabirinto = 15;
+        public const float velocidadeHidder = 4.0f;
+        public const int tamLabirinto = 20;
 
         
         //Nomes dos sprites.
         public const String seekerSprite = "Seeker.png";
+        public const String hiderSprite = "Hider.png";
         public const String wallSprite = "Wall.png";
         public const String floorSprite = "Floor.png";
         public const String mapa1 = "PPPPPPPPPPPPPPP" +

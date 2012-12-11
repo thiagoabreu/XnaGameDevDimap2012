@@ -39,9 +39,7 @@ namespace HideSeek
             float x = (spriteBatch.GraphicsDevice.Viewport.Width - dev_logo.Width) / 2;
             float y = (spriteBatch.GraphicsDevice.Viewport.Height - dev_logo.Height) / 2;
 
-            spriteBatch.Begin ();
             spriteBatch.Draw (dev_logo, new Vector2 (x, y), cor);
-            spriteBatch.End ();
         }
     }
 }
