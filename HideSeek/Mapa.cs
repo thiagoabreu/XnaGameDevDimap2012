@@ -26,12 +26,11 @@ namespace HideSeek
         {
 			int tam = Constantes.tamLabirinto;
             blocos = new Bloco[tam][];
+
             for (int i = 0; i < tam; i++)
             {
                 blocos [i] = new Bloco[tam];
-            }
-            for (int i = 0; i < tam; i++)
-            {
+
                 for (int j = 0; j < tam; j++)
                 {
                     blocos [i] [j] = new Bloco ();
