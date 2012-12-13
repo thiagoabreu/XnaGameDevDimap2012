@@ -29,14 +29,12 @@ namespace HideSeek
         Mapa mapa;
         KeyboardState currentState;
         SpriteFont fonte;
-
         PacketWriter caixaSaida;
         PacketReader caixaEntrada;
-
         EstadoDeJogo estado_atual = EstadoDeJogo.Splash;
-
         SplashScreen splashScr;
-        
+        Matrix spriteScale;
+
         public HideSeek ()
             : base()
         {
@@ -44,10 +42,10 @@ namespace HideSeek
             graphics.IsFullScreen = false;
             Content.RootDirectory = "Content";
 
-            caixaSaida = new PacketWriter();
-            caixaEntrada = new PacketReader();
+            caixaSaida = new PacketWriter ();
+            caixaEntrada = new PacketReader ();
 
-            splashScr = new SplashScreen();
+            splashScr = new SplashScreen ();
 
             this.IsFixedTimeStep = true;
             this.TargetElapsedTime = TimeSpan.FromSeconds (0.33f);
@@ -76,8 +74,8 @@ namespace HideSeek
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch (GraphicsDevice);
 
-            fonte = Content.Load<SpriteFont>("Font");
-            splashScr.LoadContent(Content);
+            fonte = Content.Load<SpriteFont> ("Font");
+            splashScr.LoadContent (Content);
         }
 
         /// <summary>
@@ -98,20 +96,28 @@ namespace HideSeek
         {
             switch (estado_atual) {
             case EstadoDeJogo.Splash:
-                splashScr.Update(gameTime, ref estado_atual);
+                splashScr.Update (gameTime, ref estado_atual);
                 break;
             case EstadoDeJogo.Menu:
-                UpdateMenu();
+                UpdateMenu ();
                 break;
             case EstadoDeJogo.Mapa:
-                UpdateSessao();
+                UpdateSessao ();
+                break;
+            case EstadoDeJogo.Lobby:
+                CarregaMapa ();
+                break;
+            case EstadoDeJogo.Loading:
+                InicializaJogadores ();
                 break;
             default:
                 //Nao deveria chegar aqui, ainda.
                 break;
             }
-                            
-            base.Update(gameTime);
+
+            spriteScale = Matrix.CreateScale ((float)GraphicsDevice.Viewport.Width / 800f, (float)GraphicsDevice.Viewport.Height / 640f, 1f);
+
+            base.Update (gameTime);
         }
 
         protected void UpdateMenu ()
@@ -128,14 +134,11 @@ namespace HideSeek
         {
             estado_atual = EstadoDeJogo.Loading;
             try {
-                rede = NetworkSession.Create(NetworkSessionType.SystemLink, 2, 2);
-                mapa = new Mapa(new Vector2(0f,0f));
-                mapa.Initialize();
-                mapa.LoadContent(Content);
-                estado_atual = EstadoDeJogo.Mapa;
-                ManipulaEventos();
+                rede = NetworkSession.Create (NetworkSessionType.SystemLink, 2, 2);
+                estado_atual = EstadoDeJogo.Lobby;
+                ManipulaEventos ();
             } catch (Exception ex) {
-                Console.WriteLine("Erro: " + ex.Message);
+                Console.WriteLine ("Erro: " + ex.Message);
             }
         }
 
@@ -163,17 +166,77 @@ namespace HideSeek
         protected void ManipulaEventos ()
         {
             rede.GamerJoined += delegate(object sender, GamerJoinedEventArgs e) {
-                Personagem player = new Personagem();
-                player.Initialize(new Vector2(32f,32f));
-                player.Mapa = mapa;
-                player.LoadContent(Content);
+                Personagem player = new Personagem (e.Gamer.IsHost);
+                player.LoadContent (Content);
                 e.Gamer.Tag = player;
             };
 
             rede.SessionEnded += delegate(object sender, NetworkSessionEndedEventArgs e) {
-                rede.Dispose();
+                rede.Dispose ();
                 rede = null;
             };
+        }
+
+        void CarregaMapa ()
+        {
+            foreach (var gamer in rede.LocalGamers) {
+                if (gamer.IsHost && null == mapa) {
+                    mapa = new Mapa (new Vector2 (0f, 0f));
+                    mapa.Initialize ();
+                }
+                if (null != mapa) {
+                    caixaSaida.Write (mapa.Descricao);
+                    Console.WriteLine ("Enviei mapa");
+                } else
+                    caixaSaida.Write ("");
+                gamer.SendData (caixaSaida, SendDataOptions.Reliable);
+            }
+
+            rede.Update ();
+            if (null == rede)
+                return;
+
+            String descricaoRemota = "";
+            bool ok = true;
+
+            foreach (LocalNetworkGamer gamer in rede.LocalGamers)
+                while (gamer.IsDataAvailable) {
+                    NetworkGamer remetente;
+                    gamer.ReceiveData (caixaEntrada, out remetente);
+                    if (remetente.IsLocal)
+                        continue;
+                    string descricaoAux = caixaEntrada.ReadString ();
+                    if (!String.IsNullOrEmpty (descricaoAux))
+                        descricaoRemota = descricaoAux;
+                    ok = ok && !String.IsNullOrEmpty (descricaoAux);
+                }
+
+            if (!String.IsNullOrEmpty (descricaoRemota) && null == mapa) {
+                mapa = new Mapa (new Vector2 (0.0f, 0.0f));
+                mapa.Initialize (descricaoRemota);
+                mapa.LoadContent (Content);
+            }
+
+            if (ok && rede.RemoteGamers.Count > 0 && null != mapa)
+                estado_atual = EstadoDeJogo.Loading;
+        }
+
+        void InicializaJogadores ()
+        {
+            mapa.LoadContent (Content);
+
+            foreach (LocalNetworkGamer gamer in rede.LocalGamers) {
+                Personagem player = gamer.Tag as Personagem;
+                player.Initialize (new Vector2 (32.0f, 32.0f));
+                player.Mapa = mapa;
+            }
+
+            rede.Update ();
+            if (null == rede)
+                return;
+
+
+            estado_atual = EstadoDeJogo.Mapa;
         }
 
         void UpdateSessao ()
@@ -218,21 +281,20 @@ namespace HideSeek
         protected override void Draw (GameTime gameTime)
         {
             GraphicsDevice.Clear (Color.Black);
+            spriteBatch.Begin (SpriteSortMode.Deferred, null, null, null, null, null, spriteScale);
 
             switch (estado_atual) {
             case EstadoDeJogo.Splash:
-                splashScr.Draw(spriteBatch);
+                splashScr.Draw (spriteBatch);
                 break;
             case EstadoDeJogo.Menu:
                 string mensagem = "N para nova sessao\nJ para juntar uma existente";
 
-                spriteBatch.Begin ();
-                spriteBatch.DrawString (fonte, mensagem, new Vector2 (160f, 160f), Color.White);
-                spriteBatch.DrawString (fonte, mensagem, new Vector2 (161f, 161f), Color.Gray);
-                spriteBatch.End ();
+                spriteBatch.DrawString (fonte, mensagem, new Vector2 (160f, 160f), Color.Gray);
+                spriteBatch.DrawString (fonte, mensagem, new Vector2 (161f, 161f), Color.White);
                 break;
             case EstadoDeJogo.Mapa:
-                spriteBatch.Begin ();
+
                 if (mapa != null)
                     mapa.Draw (spriteBatch);
 
@@ -242,20 +304,29 @@ namespace HideSeek
                     player.Draw (spriteBatch, gameTime);
                 }
 
-                spriteBatch.End ();
+                break;
+            case EstadoDeJogo.Lobby:
+                spriteBatch.DrawString (fonte, "Esperando jogadores", new Vector2 (100f, 100f), Color.Gray);
+                spriteBatch.DrawString (fonte, "Esperando jogadores", new Vector2 (101f, 101f), Color.White);
+                break;
+            case EstadoDeJogo.Loading:
+                spriteBatch.DrawString (fonte, "Carregando", new Vector2 (100f, 100f), Color.Gray);
+                spriteBatch.DrawString (fonte, "Carregando", new Vector2 (101f, 101f), Color.White);
                 break;
             default:
                 estado_atual = EstadoDeJogo.Menu;
-                Console.WriteLine("Houve um erro bizarro com o EstadodeJogo");
+                Console.WriteLine ("Houve um erro bizarro com o EstadodeJogo");
                 break;
             }
+
+            spriteBatch.End ();
 
             base.Draw (gameTime);
         }
 
         bool Apertou (Keys key)
         {
-            return currentState.IsKeyDown(key);
+            return Keyboard.GetState ().IsKeyDown (key);
         }
     }
 
@@ -265,7 +336,7 @@ namespace HideSeek
     public static class Program
     {
         private static HideSeek game;
-        
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -273,7 +344,7 @@ namespace HideSeek
         static void Main ()
         {
             game = new HideSeek ();
-            game.Run();
+            game.Run ();
         }
     }
 }

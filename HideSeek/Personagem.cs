@@ -11,6 +11,7 @@ namespace HideSeek
         Vector2 posicaoAlvo;
         Vector2 posicao;
         bool emMovimento;
+        bool isHidder;
         Texture2D sprite;
         Rectangle animationRec;
         Mapa mapa;
@@ -49,7 +50,7 @@ namespace HideSeek
 
 
 
-        public Personagem ()
+        public Personagem (bool hidder = false)
         {
             tempoDecorrido = 0;
             frameAtual = 0;
@@ -60,6 +61,7 @@ namespace HideSeek
             animationRec = new Rectangle (0, 0, 32, 32);
 
             emMovimento = false;
+            isHidder = hidder;
 
         }
 
@@ -82,7 +84,7 @@ namespace HideSeek
 
         public void LoadContent (ContentManager theContentManager)
         {
-            sprite = theContentManager.Load<Texture2D>(Constantes.seekerSprite);    
+            sprite = theContentManager.Load<Texture2D>(isHidder ? Constantes.seekerSprite : Constantes.hiderSprite);    
             frameCount = (sprite.Height / 32) - 1;
         }
 
@@ -115,7 +117,7 @@ namespace HideSeek
             tempoDecorrido += (int)theGameTime.ElapsedGameTime.TotalMilliseconds;
             if (emMovimento) {
                 if (tempoDecorrido > frameRate) {
-                    frameAtual = frameAtual < frameCount ? frameAtual + 1 : 0;
+                    frameAtual = (frameAtual + 1) % frameCount;
                     tempoDecorrido = 0;
                 }
                 animationRec.Y = 32 * frameAtual;
